@@ -349,10 +349,14 @@ function renderPaginated(d) {
 
   // --- Pagination Logic ---
   const measureBox = document.getElementById('measure-box');
-  measureBox.innerHTML = blocks.join('');
+  measureBox.style.padding = '0'; // removemos o padding para que a .a4-page ocupe 100%
   
-  const output = document.getElementById('report-output');
-  output.innerHTML = '';
+  // Criamos um container temporário para não sujar o measureBox enquanto lemos os elementos
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = blocks.join('');
+  const children = Array.from(tempDiv.children);
+
+  measureBox.innerHTML = '';
 
   const createPage = () => {
     const p = document.createElement('div');
@@ -379,24 +383,30 @@ function renderPaginated(d) {
   };
 
   let currentPage = createPage();
-  output.appendChild(currentPage);
+  measureBox.appendChild(currentPage);
   let contentArea = currentPage.querySelector('.page-content');
 
   // Move elements one by one, checking for overflow
-  const children = Array.from(measureBox.children);
   for (let el of children) {
     contentArea.appendChild(el);
     
-    // Check overflow. We leave some margin for the footer (~60px)
-    if (contentArea.scrollHeight > contentArea.clientHeight - 60) {
+    // Agora que page-content tem padding-bottom de 80px, podemos usar clientHeight direto
+    if (contentArea.scrollHeight > contentArea.clientHeight) {
       contentArea.removeChild(el); // Too big for this page
       
       currentPage = createPage();
-      output.appendChild(currentPage);
+      measureBox.appendChild(currentPage);
       contentArea = currentPage.querySelector('.page-content');
       
       contentArea.appendChild(el); // Add to new page
     }
+  }
+
+  // Depois de montar tudo no measureBox (que é sempre renderizado), passamos pro output final
+  const output = document.getElementById('report-output');
+  output.innerHTML = '';
+  while (measureBox.firstChild) {
+    output.appendChild(measureBox.firstChild);
   }
 }
 

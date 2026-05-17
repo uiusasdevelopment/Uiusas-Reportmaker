@@ -331,11 +331,9 @@ input::placeholder, textarea::placeholder { color: var(--text-muted); opacity: 0
 
 .page-content {
   flex: 1;
-  padding: 40px 48px;
+  padding: 40px 48px 80px 48px; /* Extra space at bottom for absolute footer */
   overflow: hidden; /* strictly clip height to measure */
-  display: flex;
-  flex-direction: column;
-  gap: 0;
+  display: block; /* allows margin collapsing */
 }
 
 .report-cover {
