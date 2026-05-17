@@ -252,7 +252,7 @@ function renderReport(d) {
 
   const footerHtml = showBrand ? `
   <div class="report-footer">
-    <div class="footer-brand">Gerado por <span>UIUSAS</span> Report Maker · ${dateStr}</div>
+    <div class="footer-brand">Formatado por <span>UIUSAS</span> Report Maker · ${dateStr}</div>
     <div class="footer-line"></div>
   </div>` : `
   <div class="report-footer" style="justify-content: flex-end;">
