@@ -330,10 +330,11 @@ input::placeholder, textarea::placeholder { color: var(--text-muted); opacity: 0
 }
 
 .page-content {
-  flex: 1;
-  padding: 40px 48px 80px 48px; /* Extra space at bottom for absolute footer */
-  overflow: hidden; /* strictly clip height to measure */
-  display: block; /* allows margin collapsing */
+  height: 100%;
+  width: 100%;
+  padding: 40px 48px 80px 48px; 
+  overflow: hidden; 
+  display: block; 
 }
 
 .report-cover {

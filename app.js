@@ -390,8 +390,11 @@ function renderPaginated(d) {
   for (let el of children) {
     contentArea.appendChild(el);
     
-    // Agora que page-content tem padding-bottom de 80px, podemos usar clientHeight direto
-    if (contentArea.scrollHeight > contentArea.clientHeight) {
+    let maxH = contentArea.clientHeight;
+    if (maxH < 500) maxH = 1122; // Fallback se o navegador falhar no layout escondido
+    
+    // Se o conteúdo ultrapassar a altura máxima
+    if (contentArea.scrollHeight > maxH) {
       contentArea.removeChild(el); // Too big for this page
       
       currentPage = createPage();
