@@ -407,11 +407,6 @@ function hexToRgb(hex) {
   return `${r},${g},${b}`;
 }
 
-// ── UPDATE PREVIEW ────────────────────────────────────────────────────────
-function updatePreview() {
-  const data = collectData();
-  document.getElementById('report-output').innerHTML = renderReport(data);
-}
 
 // ── EXPORT PDF ────────────────────────────────────────────────────────────
 document.getElementById('btn-export').addEventListener('click', () => {
