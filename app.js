@@ -147,12 +147,22 @@ function buildRefs(text) {
   `).join('');
 }
 
-// ── RENDER REPORT ─────────────────────────────────────────────────────────
-function renderReport(d) {
+// ── UPDATE PREVIEW ────────────────────────────────────────────────────────
+let previewTimeout;
+function updatePreview() {
+  clearTimeout(previewTimeout);
+  previewTimeout = setTimeout(() => {
+    const data = collectData();
+    renderPaginated(data);
+  }, 150);
+}
+
+// ── RENDER PAGINATED ──────────────────────────────────────────────────────
+function renderPaginated(d) {
   const { accent, accent2 } = themeAccents[d.colorTheme] || themeAccents.teal;
   const isNier = d.colorTheme === 'nier';
   const isSinais = d.colorTheme === 'sinais';
-  const showBrand = d.showBrand !== false; // defaults to true
+  const showBrand = d.showBrand !== false; 
 
   const studentLines = d.student ? d.student.split('\n').map(s=>s.trim()).filter(Boolean) : [];
   const studentVal = studentLines.map(esc).join('<br>');
@@ -170,99 +180,104 @@ function renderReport(d) {
   const metaHtml = metaItems.map(m => `
     <div class="report-meta-item">
       <div class="report-meta-label">${esc(m.label)}</div>
-      <div class="report-meta-value">${m.isRaw ? m.value : esc(m.value)}</div>
+      <div class="report-meta-value">${m.isRaw ? m.value : m.value}</div>
     </div>
   `).join('');
-
-  const stepsHtml = d.methodSteps.filter(s => s.title || s.body).map(s => `
-    <div class="method-step-card">
-      <div class="method-step-card-title">${esc(s.title)}</div>
-      <div class="method-step-card-body">${esc(s.body)}</div>
-    </div>
-  `).join('');
-
-  const resultsHtml = d.results.filter(r => r.title || r.body).map(r => `
-    <div class="result-card">
-      <div class="result-card-header">
-        <div class="result-card-dot"></div>
-        <div class="result-card-title">${esc(r.title)}</div>
-      </div>
-      <div class="result-card-body">${esc(r.body)}</div>
-    </div>
-  `).join('');
-
-  const sectionTitle = (num, label) => `
-    <h2 class="report-section-title">
-      <span class="section-number-badge">${num}</span>${esc(label)}
-    </h2>
-  `;
-
-  let sections = '';
-
-  if (d.intro) sections += `
-    <div class="report-section">
-      ${sectionTitle('1', 'Introdução')}
-      <p class="report-text">${esc(d.intro)}</p>
-    </div>`;
-
-  if (d.objectives) sections += `
-    <div class="report-section">
-      ${sectionTitle('2', 'Objetivos')}
-      <ul class="report-list">${buildList(d.objectives)}</ul>
-    </div>`;
-
-  if (d.materials) sections += `
-    <div class="report-section">
-      ${sectionTitle('3', 'Materiais e Equipamentos')}
-      <ul class="report-list">${buildList(d.materials)}</ul>
-    </div>`;
-
-  if (stepsHtml) sections += `
-    <div class="report-section">
-      ${sectionTitle('4', 'Metodologia')}
-      <div class="method-steps">${stepsHtml}</div>
-    </div>`;
-
-  if (resultsHtml) sections += `
-    <div class="report-section">
-      ${sectionTitle('5', 'Resultados Esperados / Avaliações Subsequentes')}
-      <div class="results-grid">${resultsHtml}</div>
-    </div>`;
-
-  if (d.discussion) sections += `
-    <div class="report-section">
-      ${sectionTitle('6', 'Discussão')}
-      <p class="report-text">${esc(d.discussion)}</p>
-    </div>`;
-
-  if (d.conclusion) sections += `
-    <div class="report-section">
-      ${sectionTitle('7', 'Conclusão')}
-      <p class="report-text">${esc(d.conclusion)}</p>
-    </div>`;
-
-  if (d.references) sections += `
-    <div class="report-section">
-      ${sectionTitle('8', 'Referências Bibliográficas')}
-      <ul class="references-list">${buildRefs(d.references)}</ul>
-    </div>`;
 
   const now = new Date();
   const dateStr = now.toLocaleDateString('pt-BR', { day:'2-digit', month:'long', year:'numeric' });
 
-  const footerHtml = showBrand ? `
-  <div class="report-footer">
-    <div class="footer-brand">Formatado por <span>UIUSAS</span> Report Maker · ${dateStr}</div>
-    <div class="footer-line"></div>
-  </div>` : `
-  <div class="report-footer" style="justify-content: flex-end;">
-    <div class="footer-brand">${dateStr}</div>
-  </div>`;
+  // Array of HTML blocks
+  const blocks = [];
 
+  blocks.push(`
+  <div class="report-cover">
+    <div class="report-badge">📋 Relatório de Aula Prática</div>
+    <h1 class="report-cover-title">${esc(d.title || 'Relatório de Laboratório')}</h1>
+    ${d.theme ? `<p class="report-cover-theme">Tema: ${esc(d.theme)}</p>` : ''}
+    ${metaHtml ? `<div class="report-meta-grid">${metaHtml}</div>` : ''}
+  </div>`);
+
+  const sectionTitle = (num, label) => `
+    <h2 class="report-section-title" style="margin-top: 24px; margin-bottom: 16px;">
+      <span class="section-number-badge">${num}</span>${esc(label)}
+    </h2>
+  `;
+
+  if (d.intro) {
+    blocks.push(sectionTitle('1', 'Introdução'));
+    d.intro.split('\n\n').forEach(p => {
+      if(p.trim()) blocks.push(`<p class="report-text" style="margin-bottom: 12px;">${esc(p)}</p>`);
+    });
+  }
+
+  if (d.objectives) {
+    blocks.push(sectionTitle('2', 'Objetivos'));
+    blocks.push(`<ul class="report-list" style="margin-bottom: 24px;">${buildList(d.objectives)}</ul>`);
+  }
+
+  if (d.materials) {
+    blocks.push(sectionTitle('3', 'Materiais e Equipamentos'));
+    blocks.push(`<ul class="report-list" style="margin-bottom: 24px;">${buildList(d.materials)}</ul>`);
+  }
+
+  if (d.methodSteps && d.methodSteps.length > 0) {
+    blocks.push(sectionTitle('4', 'Metodologia'));
+    d.methodSteps.forEach(s => {
+      if(s.title || s.body) {
+        blocks.push(`
+        <div class="method-step-card" style="margin-bottom: 16px;">
+          <div class="method-step-card-title">${esc(s.title)}</div>
+          <div class="method-step-card-body">${esc(s.body)}</div>
+        </div>`);
+      }
+    });
+  }
+
+  if (d.results && d.results.length > 0) {
+    blocks.push(sectionTitle('5', 'Resultados / Avaliações'));
+    d.results.forEach(r => {
+      if(r.title || r.body) {
+        blocks.push(`
+        <div class="result-card" style="margin-bottom: 12px;">
+          <div class="result-card-header">
+            <div class="result-card-dot"></div>
+            <div class="result-card-title">${esc(r.title)}</div>
+          </div>
+          <div class="result-card-body">${esc(r.body)}</div>
+        </div>`);
+      }
+    });
+  }
+
+  if (d.discussion) {
+    blocks.push(sectionTitle('6', 'Discussão'));
+    d.discussion.split('\n\n').forEach(p => {
+      if(p.trim()) blocks.push(`<p class="report-text" style="margin-bottom: 12px;">${esc(p)}</p>`);
+    });
+  }
+
+  if (d.conclusion) {
+    blocks.push(sectionTitle('7', 'Conclusão'));
+    d.conclusion.split('\n\n').forEach(p => {
+      if(p.trim()) blocks.push(`<p class="report-text" style="margin-bottom: 12px;">${esc(p)}</p>`);
+    });
+  }
+
+  if (d.references) {
+    blocks.push(sectionTitle('8', 'Referências'));
+    blocks.push(`<ul class="references-list" style="margin-bottom: 24px;">${buildRefs(d.references)}</ul>`);
+  }
+
+  // --- Theme Overrides ---
+  let pageBg = '#ffffff';
+  let pageText = '#1a1a2a';
   let extraCss = '';
+
   if (isNier) {
+    pageBg = '#dad4bb'; pageText = '#444';
     extraCss = `
-      body, #report-output { background: #dad4bb; color: #444; font-family: 'Arial', sans-serif; border-radius: 0; min-height: 100vh; }
+      body, .a4-page { background: #dad4bb !important; color: #444; font-family: 'Arial', sans-serif; border-radius: 0; }
       .report-cover { background: #d0c9ad; border-bottom: 2px solid #a39e86; }
       .report-cover::before { display: none; }
       .report-cover-title { color: #333; font-family: 'Arial', sans-serif; text-transform: uppercase; letter-spacing: 2px; }
@@ -270,72 +285,119 @@ function renderReport(d) {
       .report-meta-item { background: transparent; border: 1px solid #a39e86; border-radius: 0; color: #444; }
       .report-meta-label { color: #666; }
       .report-meta-value { color: #333; }
-      .report-section-title { color: #333; border-image: none; border-bottom: 2px solid #a39e86; }
-      .section-number-badge { background: #444; color: #dad4bb; border-radius: 0; }
+      .report-section-title { color: #333; border-image: none !important; border-bottom: 2px solid #a39e86; }
+      .section-number-badge { background: #444 !important; color: #dad4bb; border-radius: 0; }
       .report-text, .report-list li, .method-step-card-body, .result-card-body, .references-list li { color: #444; }
-      .method-step-card { border: 1px solid #a39e86; border-radius: 0; border-left-width: 4px; border-left-color: #444; background: #e0dcca; }
-      .method-step-card-title { background: #d0c9ad; color: #333; }
+      .method-step-card { border: 1px solid #a39e86; border-radius: 0; border-left-width: 4px; border-left-color: #444 !important; background: #e0dcca; }
+      .method-step-card-title { background: #d0c9ad !important; color: #333; }
       .result-card { border: 1px solid #a39e86; border-radius: 0; background: #e0dcca; }
-      .result-card-header { background: #a39e86; }
+      .result-card-header { background: #a39e86 !important; }
       .result-card-title { color: #fff; }
       .report-footer { background: #d0c9ad; border-top: 2px solid #a39e86; }
-      .report-badge { background: #444; color: #dad4bb; border: none; border-radius: 0; }
-      .list-bullet { background: #444; border-radius: 0; }
-      .report-cover::after { color: rgba(0,0,0,0.03); font-family: 'Arial', sans-serif; font-weight: 900; }
+      .report-badge { background: #444 !important; color: #dad4bb; border: none; border-radius: 0; }
+      .list-bullet { background: #444 !important; border-radius: 0; }
+      .ref-num { color: #444 !important; }
     `;
   } else if (isSinais) {
+    pageBg = '#050505'; pageText = '#e0e0e0';
     extraCss = `
-      body, #report-output { background: #050505; color: #e0e0e0; min-height: 100vh; }
+      body, .a4-page { background: #050505 !important; color: #e0e0e0; }
       .report-cover { background: radial-gradient(circle at 50% 150%, #022c22, #000); border-bottom: 1px solid #064e3b; }
       .report-cover-title { color: #fff; text-shadow: 0 0 10px rgba(5,150,105,0.5); font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 0.1em; }
       .report-cover-theme { color: #a7f3d0; }
       .report-meta-item { background: rgba(5,150,105,0.05); border: 1px solid rgba(5,150,105,0.3); }
       .report-meta-label { color: #6ee7b7; }
       .report-meta-value { color: #fff; }
-      .report-section-title { color: #fff; border-image: linear-gradient(90deg, #059669, transparent) 1; }
-      .section-number-badge { background: #059669; color: #fff; box-shadow: 0 0 8px rgba(5,150,105,0.5); }
+      .report-section-title { color: #fff; }
+      .section-number-badge { box-shadow: 0 0 8px rgba(5,150,105,0.5); }
       .report-text, .report-list li, .method-step-card-body, .result-card-body, .references-list li { color: #d1d5db; }
-      .method-step-card { border: 1px solid #1f2937; border-left-color: #059669; background: #0f172a; }
-      .method-step-card-title { background: rgba(5,150,105,0.1); color: #fff; }
+      .method-step-card { border: 1px solid #1f2937; background: #0f172a; }
+      .method-step-card-title { color: #fff; }
       .result-card { border: 1px solid #1f2937; background: #0f172a; }
-      .result-card-header { background: #059669; }
       .result-card-title { color: #fff; }
       .report-footer { background: #000; border-top: 1px solid #1f2937; }
-      .report-badge { background: rgba(5,150,105,0.2); border: 1px solid rgba(5,150,105,0.4); color: #a7f3d0; }
-      .list-bullet { background: #10b981; }
-      .ref-num { color: #10b981; }
+      .report-badge { border: 1px solid rgba(5,150,105,0.4); color: #a7f3d0; }
       .report-list li { border-bottom-color: #1f2937; }
       .references-list li { border-bottom-color: #1f2937; }
     `;
   }
 
-  return `
-  <style>
-    #report-output { --accent:${accent}; --accent2:${accent2}; }
-    .report-cover  { background: linear-gradient(160deg, ${accent} 0%, ${accent2} 100%); }
-    .section-number-badge { background: linear-gradient(135deg, ${accent}, ${accent2}); }
-    .report-section-title { border-image: linear-gradient(90deg, ${accent}, transparent) 1; }
-    .result-card-header { background: linear-gradient(90deg, ${accent}, ${accent2}); }
-    .method-step-card { border-left-color: ${accent}; }
-    .method-step-card-title { background: linear-gradient(90deg, rgba(${hexToRgb(accent)},0.07), transparent); }
-    .list-bullet { background: ${accent}; }
-    .ref-num { color: ${accent}; }
-    .footer-line { background: linear-gradient(90deg, ${accent}, ${accent2}); }
+  const baseCss = `
+    .a4-page { --accent:${accent}; --accent2:${accent2}; }
+    .report-cover { background: linear-gradient(160deg, ${accent} 0%, ${accent2} 100%); }
+    .section-number-badge { background: linear-gradient(135deg, ${accent}, ${accent2}); color: #fff; font-size: 0.68rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.05em; margin-right: 10px; }
+    .report-section-title { border-bottom: 2px solid; border-image: linear-gradient(90deg, ${accent}, transparent) 1; padding-bottom: 10px; font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: #1a1a2a; display: flex; align-items: center; }
+    .result-card-header { background: linear-gradient(90deg, ${accent}, ${accent2}); display: flex; align-items: center; gap: 10px; padding: 10px 16px; }
+    .method-step-card { border: 1px solid #e5e7eb; border-left: 4px solid ${accent}; border-radius: 8px; overflow: hidden; }
+    .method-step-card-title { background: linear-gradient(90deg, rgba(${hexToRgb(accent)},0.07), transparent); padding: 10px 16px; font-weight: 700; font-size: 0.85rem; color: #1a1a2a; }
+    .list-bullet { background: ${accent}; width: 6px; height: 6px; border-radius: 50%; margin-top: 8px; flex-shrink: 0; }
+    .ref-num { color: ${accent}; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; font-weight: 700; min-width: 24px; padding-top: 2px; }
+    .footer-line { background: linear-gradient(90deg, ${accent}, ${accent2}); height: 3px; width: 60px; border-radius: 2px; }
     .footer-brand span { color: ${accent}; }
-    .report-badge { background: rgba(255,255,255,0.15); }
+    .report-badge { background: rgba(255,255,255,0.15); display: inline-flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.9); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 20px; font-family: 'JetBrains Mono', monospace; }
     ${extraCss}
-  </style>
+  `;
 
-  <div class="report-cover">
-    <div class="report-badge">📋 Relatório de Aula Prática</div>
-    <h1 class="report-cover-title">${esc(d.title || 'Relatório de Laboratório')}</h1>
-    ${d.theme ? `<p class="report-cover-theme">Tema: ${esc(d.theme)}</p>` : ''}
-    ${metaHtml ? `<div class="report-meta-grid">${metaHtml}</div>` : ''}
-  </div>
+  // Update global styles for the preview
+  let styleEl = document.getElementById('dynamic-theme');
+  if (!styleEl) {
+    styleEl = document.createElement('style');
+    styleEl.id = 'dynamic-theme';
+    document.head.appendChild(styleEl);
+  }
+  styleEl.innerHTML = baseCss;
 
-  <div class="report-body">${sections || '<p style="color:#9ca3af;text-align:center;padding:40px 0">Preencha os campos ao lado para gerar o relatório.</p>'}</div>
+  // --- Pagination Logic ---
+  const measureBox = document.getElementById('measure-box');
+  measureBox.innerHTML = blocks.join('');
+  
+  const output = document.getElementById('report-output');
+  output.innerHTML = '';
 
-  ${footerHtml}`;
+  const createPage = () => {
+    const p = document.createElement('div');
+    p.className = 'a4-page';
+    p.style.setProperty('--page-bg', pageBg);
+    p.style.setProperty('--page-text', pageText);
+    
+    const content = document.createElement('div');
+    content.className = 'page-content';
+    p.appendChild(content);
+
+    // Footer
+    const footerHtml = showBrand ? `
+      <div class="report-footer" style="background: transparent; padding: 16px 48px; display: flex; align-items: center; justify-content: space-between; position: absolute; bottom: 0; left: 0; right: 0; border-top: 1px solid rgba(150,150,150,0.2);">
+        <div class="footer-brand" style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #9ca3af; letter-spacing: 0.1em;">Formatado por <span>UIUSAS</span> Report Maker · ${dateStr}</div>
+        <div class="footer-line"></div>
+      </div>` : `
+      <div class="report-footer" style="background: transparent; padding: 16px 48px; display: flex; align-items: center; justify-content: flex-end; position: absolute; bottom: 0; left: 0; right: 0; border-top: 1px solid rgba(150,150,150,0.2);">
+        <div class="footer-brand" style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #9ca3af; letter-spacing: 0.1em;">${dateStr}</div>
+      </div>`;
+    
+    p.insertAdjacentHTML('beforeend', footerHtml);
+    return p;
+  };
+
+  let currentPage = createPage();
+  output.appendChild(currentPage);
+  let contentArea = currentPage.querySelector('.page-content');
+
+  // Move elements one by one, checking for overflow
+  const children = Array.from(measureBox.children);
+  for (let el of children) {
+    contentArea.appendChild(el);
+    
+    // Check overflow. We leave some margin for the footer (~60px)
+    if (contentArea.scrollHeight > contentArea.clientHeight - 60) {
+      contentArea.removeChild(el); // Too big for this page
+      
+      currentPage = createPage();
+      output.appendChild(currentPage);
+      contentArea = currentPage.querySelector('.page-content');
+      
+      contentArea.appendChild(el); // Add to new page
+    }
+  }
 }
 
 function hexToRgb(hex) {
@@ -353,9 +415,11 @@ function updatePreview() {
 
 // ── EXPORT PDF ────────────────────────────────────────────────────────────
 document.getElementById('btn-export').addEventListener('click', () => {
-  const data = collectData();
-  const reportHtml = renderReport(data);
-  const title = data.title || 'Relatório de Laboratório';
+  const title = document.getElementById('f-title').value.trim() || 'Relatório de Laboratório';
+  
+  // Pegamos o HTML já paginado na tela!
+  const reportHtml = document.getElementById('report-output').innerHTML;
+  const styleHtml = document.getElementById('dynamic-theme') ? document.getElementById('dynamic-theme').innerHTML : '';
 
   const win = window.open('', '_blank');
   win.document.write(`<!DOCTYPE html>
@@ -366,56 +430,33 @@ document.getElementById('btn-export').addEventListener('click', () => {
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Inter',sans-serif;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
-#report-output{max-width:210mm;margin:0 auto;background:#fff;font-family:'Inter',sans-serif;color:#1a1a2a;line-height:1.7;}
-.report-cover{padding:52px 48px 40px;position:relative;overflow:hidden;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
-.report-cover::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;}
-.report-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:rgba(255,255,255,0.9);font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:20px;font-family:'JetBrains Mono',monospace;}
-.report-cover-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:#ffffff;line-height:1.25;margin-bottom:10px;position:relative;}
-.report-cover-theme{font-size:0.92rem;color:rgba(255,255,255,0.75);font-style:italic;margin-bottom:28px;position:relative;}
+body{font-family:'Inter',sans-serif;background:transparent;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+.report-list{list-style:none;padding:0;margin:0;}
+.report-list li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:0.9rem;color:#374151;border-bottom:1px solid rgba(150,150,150,0.1);}
+.report-list li:last-child{border-bottom:none;}
+.references-list{list-style:none;padding:0;}
+.references-list li{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid rgba(150,150,150,0.1);font-size:0.84rem;color:#374151;line-height:1.6;}
+.references-list li:last-child{border-bottom:none;}
 .report-meta-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;position:relative;}
 .report-meta-item{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:8px;padding:10px 14px;}
 .report-meta-label{font-size:0.62rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.6);margin-bottom:3px;font-family:'JetBrains Mono',monospace;}
 .report-meta-value{font-size:0.82rem;font-weight:500;color:#ffffff;}
-.report-body{padding:40px 48px;}
-.report-section{margin-bottom:36px;}
-.report-section-title{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:#1a1a2a;padding-bottom:10px;border-bottom:2px solid;margin-bottom:18px;display:flex;align-items:center;gap:10px;}
-.section-number-badge{color:white;font-size:0.68rem;font-weight:700;font-family:'JetBrains Mono',monospace;padding:2px 8px;border-radius:4px;letter-spacing:0.05em;}
-.report-text{font-size:0.9rem;line-height:1.8;color:#374151;text-align:justify;}
-.report-list{list-style:none;padding:0;margin:0;}
-.report-list li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:0.9rem;color:#374151;border-bottom:1px solid #f3f4f6;}
-.report-list li:last-child{border-bottom:none;}
-.list-bullet{width:6px;height:6px;border-radius:50%;margin-top:8px;flex-shrink:0;}
-.method-steps{display:flex;flex-direction:column;gap:16px;}
-.method-step-card{border:1px solid #e5e7eb;border-left-width:4px;border-radius:8px;overflow:hidden;}
-.method-step-card-title{padding:10px 16px;font-weight:700;font-size:0.85rem;color:#1a1a2a;}
-.method-step-card-body{padding:12px 16px;font-size:0.88rem;color:#374151;line-height:1.7;}
-.results-grid{display:flex;flex-direction:column;gap:12px;}
-.result-card{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;}
-.result-card-header{display:flex;align-items:center;gap:10px;padding:10px 16px;}
-.result-card-dot{width:8px;height:8px;background:rgba(255,255,255,0.7);border-radius:50%;flex-shrink:0;}
-.result-card-title{font-size:0.82rem;font-weight:700;color:#fff;}
-.result-card-body{padding:12px 16px;font-size:0.88rem;color:#374151;line-height:1.7;}
-.references-list{list-style:none;padding:0;}
-.references-list li{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid #f3f4f6;font-size:0.84rem;color:#374151;line-height:1.6;}
-.references-list li:last-child{border-bottom:none;}
-.ref-num{font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:700;min-width:24px;padding-top:2px;}
-.report-footer{background:#f8fafc;border-top:1px solid #e5e7eb;padding:16px 48px;display:flex;align-items:center;justify-content:space-between;}
-.footer-brand{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#9ca3af;letter-spacing:0.1em;}
-.footer-line{height:3px;width:60px;border-radius:2px;}
+.report-text{font-size:0.9rem;line-height:1.8;color:#374151;text-align:justify;white-space:pre-wrap;}
+.report-cover::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;}
+
+${styleHtml}
+
 @page{size:A4;margin:0;}
 @media print{
-  html,body{width:210mm;}
-  .report-section-title { page-break-after: avoid; break-after: avoid; }
-  .method-step-card, .result-card { page-break-inside: avoid; break-inside: avoid; }
-  .report-list li, .references-list li { page-break-inside: avoid; break-inside: avoid; }
-  .report-meta-grid { page-break-inside: avoid; break-inside: avoid; }
-  p, li { orphans: 3; widows: 3; }
+  html,body{width:210mm; background:transparent !important;}
+  .a4-page { box-shadow: none !important; margin: 0 !important; page-break-after: always; break-after: page; width: 210mm; height: 297mm; overflow: hidden; position: relative; }
+  .page-content { padding: 40px 48px; }
+  .report-cover { margin: -40px -48px 36px -48px; padding: 52px 48px 40px; position: relative; }
 }
 </style>
 </head>
 <body>
-<div id="report-output">${reportHtml}</div>
+${reportHtml}
 <script>
 window.onload = function() {
   setTimeout(function() { window.print(); }, 800);
