@@ -262,7 +262,7 @@ function renderReport(d) {
   let extraCss = '';
   if (isNier) {
     extraCss = `
-      #report-output { background: #dad4bb; color: #444; font-family: 'Arial', sans-serif; border-radius: 0; }
+      body, #report-output { background: #dad4bb; color: #444; font-family: 'Arial', sans-serif; border-radius: 0; min-height: 100vh; }
       .report-cover { background: #d0c9ad; border-bottom: 2px solid #a39e86; }
       .report-cover::before { display: none; }
       .report-cover-title { color: #333; font-family: 'Arial', sans-serif; text-transform: uppercase; letter-spacing: 2px; }
@@ -285,7 +285,7 @@ function renderReport(d) {
     `;
   } else if (isSinais) {
     extraCss = `
-      #report-output { background: #050505; color: #e0e0e0; }
+      body, #report-output { background: #050505; color: #e0e0e0; min-height: 100vh; }
       .report-cover { background: radial-gradient(circle at 50% 150%, #022c22, #000); border-bottom: 1px solid #064e3b; }
       .report-cover-title { color: #fff; text-shadow: 0 0 10px rgba(5,150,105,0.5); font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 0.1em; }
       .report-cover-theme { color: #a7f3d0; }
