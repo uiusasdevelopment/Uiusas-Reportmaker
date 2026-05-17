@@ -397,9 +397,21 @@ function renderPaginated(d) {
     if (contentArea.scrollHeight > maxH) {
       contentArea.removeChild(el); // Too big for this page
       
+      // Verifica se o elemento anterior que ficou no final da página é um subtítulo "órfão"
+      let orphanTitle = null;
+      if (contentArea.lastElementChild && contentArea.lastElementChild.classList.contains('report-section-title')) {
+        orphanTitle = contentArea.lastElementChild;
+        contentArea.removeChild(orphanTitle);
+      }
+
       currentPage = createPage();
       measureBox.appendChild(currentPage);
       contentArea = currentPage.querySelector('.page-content');
+      
+      // Se tinha um título órfão, joga ele no topo da página nova primeiro
+      if (orphanTitle) {
+        contentArea.appendChild(orphanTitle);
+      }
       
       contentArea.appendChild(el); // Add to new page
     }
