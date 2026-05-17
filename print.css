@@ -1,0 +1,40 @@
+/* ===========================
+   PRINT / EXPORT CSS
+   Used by html2pdf / window.print
+   =========================== */
+
+body {
+  font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  margin: 0; padding: 0; background: #fff;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+#report-output {
+  width: 210mm;
+  margin: 0 auto;
+  background: #fff;
+}
+
+.report-cover {
+  padding: 52px 48px 40px;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+@media print {
+  html, body { width: 210mm; }
+  .report-body { padding: 36px 48px; }
+  
+  /* Evitar cortes no meio de componentes */
+  .report-section-title { page-break-after: avoid; break-after: avoid; }
+  .method-step-card, .result-card { page-break-inside: avoid; break-inside: avoid; }
+  .report-list li, .references-list li { page-break-inside: avoid; break-inside: avoid; }
+  .report-meta-grid { page-break-inside: avoid; break-inside: avoid; }
+  p, li { orphans: 3; widows: 3; }
+}

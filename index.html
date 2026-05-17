@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UIUSAS Report Maker</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- HEADER -->
+  <header id="main-header">
+    <div class="header-left">
+      <div class="logo-mark">UR</div>
+      <div class="header-titles">
+        <h1>UIUSAS <span>Report Maker</span></h1>
+        <p class="header-sub">Formatador Científico de Relatórios de Laboratório</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button id="btn-load" class="btn btn-ghost" title="Carregar JSON salvo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Carregar
+      </button>
+      <button id="btn-save" class="btn btn-ghost" title="Salvar JSON">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Salvar
+      </button>
+      <button id="btn-preview" class="btn btn-secondary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        Preview
+      </button>
+      <button id="btn-export" class="btn btn-primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Exportar PDF
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <div id="layout">
+
+    <!-- EDITOR PANEL -->
+    <aside id="editor-panel">
+      <div class="panel-scroll">
+
+        <!-- REPORT IDENTITY -->
+        <section class="editor-section">
+          <div class="section-header">
+            <span class="section-num">01</span>
+            <h2>Identificação do Relatório</h2>
+          </div>
+          <div class="field-group">
+            <label>Título do Relatório</label>
+            <input type="text" id="f-title" placeholder="Ex: Relatório de Aula Prática de Microbiologia">
+          </div>
+          <div class="field-group">
+            <label>Tema / Subtítulo</label>
+            <input type="text" id="f-theme" placeholder="Ex: Normas de Biossegurança e Isolamento de Microbiota Nasal">
+          </div>
+          <div class="field-row">
+            <div class="field-group">
+              <label>Data da Prática</label>
+              <input type="text" id="f-date" placeholder="Ex: 11.05.2025">
+            </div>
+            <div class="field-group">
+              <label>Disciplina / Curso</label>
+              <input type="text" id="f-discipline" placeholder="Ex: Microbiologia Clínica">
+            </div>
+          </div>
+          <div class="field-group">
+            <label>Aluno(s) <small>(um por linha)</small></label>
+            <textarea id="f-student" rows="2" placeholder="Ex: Nome do Aluno 1&#10;Nome do Aluno 2"></textarea>
+          </div>
+          <div class="field-row">
+            <div class="field-group">
+              <label>Professor(a)</label>
+              <input type="text" id="f-professor" placeholder="Nome do(a) professor(a)">
+            </div>
+          <div class="field-row">
+            <div class="field-group">
+              <label>Instituição</label>
+              <input type="text" id="f-institution" placeholder="Nome da instituição">
+            </div>
+            <div class="field-group">
+              <label>Turma / Período</label>
+              <input type="text" id="f-class" placeholder="Ex: Turma B — 3º Período">
+            </div>
+          </div>
+        </section>
+
+        <!-- INTRODUCTION -->
+        <section class="editor-section">
+          <div class="section-header">
+            <span class="section-num">02</span>
+            <h2>1. Introdução</h2>
+          </div>
+          <div class="field-group">
+            <label>Texto de Introdução</label>
+            <textarea id="f-intro" rows="7" placeholder="Descreva o contexto teórico, fundamentação e relevância da prática..."></textarea>
+          </div>
+        </section>
+
+        <!-- OBJECTIVES -->
+        <section class="editor-section">
+          <div class="section-header">
+            <span class="section-num">03</span>
+            <h2>2. Objetivos</h2>
+          </div>
+          <div class="field-group">
+            <label>Lista de Objetivos <small>(um por linha)</small></label>
+            <textarea id="f-objectives" rows="5" placeholder="Aplicar protocolos de biossegurança e assepsia.&#10;Compreender os processos de esterilização.&#10;Executar a técnica de colheita de exsudato nasal."></textarea>
+          </div>
+        </section>
+
+        <!-- MATERIALS -->
+        <section class="editor-section">
+          <div class="section-header">
+            <span class="section-num">04</span>
+            <h2>3. Materiais e Equipamentos</h2>
+          </div>
+          <div class="field-group">
+            <label>Lista de Materiais <small>(um por linha)</small></label>
+            <textarea id="f-materials" rows="6" placeholder="EPIs completos (jaleco, touca, sapatos, calça).&#10;Álcool a 70% e álcool iodado.&#10;Zaragatoa (swab) estéril.&#10;Tubo de ensaio com Caldo BHI."></textarea>
+          </div>
+        </section>
+
+        <!-- METHODOLOGY -->
+        <section class="editor-section">
+          <div class="section-header">
+            <span class="section-num">05</span>
+            <h2>4. Metodologia</h2>
+          </div>
+          <div id="method-steps-container">
+            <!-- steps added dynamically -->
+          </div>
+          <button class="btn-add-step" id="btn-add-step">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            Adicionar Etapa
+          </button>
+        </section>
+
+        <!-- RESULTS / EVALUATIONS -->
+        <section class="editor-section">
+          <div class="section-header">
+            <span class="section-num">06</span>
+            <h2>5. Resultados Esperados / Avaliações</h2>
+          </div>
+          <div id="results-container">
+            <!-- results added dynamically -->
+          </div>
+          <button class="btn-add-step" id="btn-add-result">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            Adicionar Resultado/Avaliação
+          </button>
+        </section>
+
+        <!-- DISCUSSION & CONCLUSION -->
+        <section class="editor-section">
+          <div class="section-header">
+            <span class="section-num">07</span>
+            <h2>6. Discussão</h2>
+          </div>
+          <div class="field-group">
+            <label>Texto de Discussão</label>
+            <textarea id="f-discussion" rows="5" placeholder="Analise criticamente os resultados, compare com a literatura, discuta limitações..."></textarea>
+          </div>
+        </section>
+
+        <section class="editor-section">
+          <div class="section-header">
+            <span class="section-num">08</span>
+            <h2>7. Conclusão</h2>
+          </div>
+          <div class="field-group">
+            <label>Texto de Conclusão</label>
+            <textarea id="f-conclusion" rows="4" placeholder="Sintetize os principais achados e o cumprimento dos objetivos..."></textarea>
+          </div>
+        </section>
+
+        <!-- REFERENCES -->
+        <section class="editor-section">
+          <div class="section-header">
+            <span class="section-num">09</span>
+            <h2>8. Referências Bibliográficas</h2>
+          </div>
+          <div class="field-group">
+            <label>Referências <small>(uma por linha, formato ABNT)</small></label>
+            <textarea id="f-references" rows="5" placeholder="MURRAY, P. R. et al. Microbiologia Médica. 7. ed. Rio de Janeiro: Elsevier, 2014."></textarea>
+          </div>
+        </section>
+
+        <!-- THEME E OPÇÕES -->
+        <section class="editor-section">
+          <div class="section-header">
+            <span class="section-num">10</span>
+            <h2>Aparência e Opções</h2>
+          </div>
+          <div class="field-group">
+            <label>Tema do Relatório</label>
+            <div class="theme-picker" id="theme-picker">
+              <div class="theme-swatch active" data-theme="teal" style="background: linear-gradient(135deg, #0d9488, #0891b2)" title="Teal Science"></div>
+              <div class="theme-swatch" data-theme="indigo" style="background: linear-gradient(135deg, #4f46e5, #7c3aed)" title="Indigo Lab"></div>
+              <div class="theme-swatch" data-theme="crimson" style="background: linear-gradient(135deg, #dc2626, #b91c1c)" title="Crimson Med"></div>
+              <div class="theme-swatch" data-theme="amber" style="background: linear-gradient(135deg, #d97706, #b45309)" title="Amber Research"></div>
+              <div class="theme-swatch" data-theme="emerald" style="background: linear-gradient(135deg, #059669, #047857)" title="Emerald Bio"></div>
+              <div class="theme-swatch" data-theme="slate" style="background: linear-gradient(135deg, #475569, #334155)" title="Slate Classic"></div>
+              <div class="theme-swatch" data-theme="sinais" style="background: #000; border: 1px solid #059669;" title="Sinais do Outro Lado"></div>
+              <div class="theme-swatch" data-theme="nier" style="background: #dad4bb; border: 1px solid #4a4a4a;" title="YoRHa (NieR)"></div>
+            </div>
+          </div>
+          <div class="field-group" style="margin-top: 20px; display: flex; align-items: center; gap: 8px;">
+            <input type="checkbox" id="f-show-brand" checked style="width: auto; margin: 0;">
+            <label for="f-show-brand" style="margin: 0; text-transform: none; letter-spacing: normal;">Mostrar marca UIUSAS no rodapé</label>
+          </div>
+        </section>
+
+      </div><!-- end panel-scroll -->
+    </aside>
+
+    <!-- PREVIEW PANEL -->
+    <main id="preview-panel">
+      <div id="preview-container">
+        <div id="report-output">
+          <!-- Generated report goes here -->
+        </div>
+      </div>
+    </main>
+
+  </div><!-- end layout -->
+</div><!-- end app -->
+
+<!-- HIDDEN FILE INPUT -->
+<input type="file" id="file-input" accept=".json" style="display:none">
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
