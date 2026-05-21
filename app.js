@@ -108,6 +108,7 @@ function collectData() {
   });
 
   return {
+    docType: v('f-doc-type'),
     title: v('f-title'),
     theme: v('f-theme'),
     date: v('f-date'),
@@ -117,20 +118,31 @@ function collectData() {
     institution: v('f-institution'),
     classGroup: v('f-class'),
     intro: v('f-intro'),
+    introTitle: v('f-intro-title'),
     objectives: v('f-objectives'),
+    objTitle: v('f-obj-title'),
     materials: v('f-materials'),
+    matTitle: v('f-mat-title'),
     methodSteps: steps,
+    methTitle: v('f-meth-title'),
     results,
+    resTitle: v('f-res-title'),
     discussion: v('f-discussion'),
+    discTitle: v('f-disc-title'),
     conclusion: v('f-conclusion'),
+    concTitle: v('f-conc-title'),
     references: v('f-references'),
+    refTitle: v('f-ref-title'),
     colorTheme: currentTheme,
     showBrand: document.getElementById('f-show-brand').checked,
   };
 }
 
-function v(id) { return document.getElementById(id).value.trim(); }
-function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function v(id) { 
+  const el = document.getElementById(id); 
+  return el ? el.value.trim() : ''; 
+}
+function esc(s) { return s ? s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : ''; }
 
 // ── BUILD LIST HTML ───────────────────────────────────────────────────────
 function buildList(text) {
@@ -192,7 +204,7 @@ function renderPaginated(d) {
 
   blocks.push(`
   <div class="report-cover">
-    <div class="report-badge">📋 Relatório de Aula Prática</div>
+    <div class="report-badge">📋 ${esc(d.docType || 'RELATÓRIO DE AULA PRÁTICA')}</div>
     <h1 class="report-cover-title">${esc(d.title || 'Relatório de Laboratório')}</h1>
     ${d.theme ? `<p class="report-cover-theme">Tema: ${esc(d.theme)}</p>` : ''}
     ${metaHtml ? `<div class="report-meta-grid">${metaHtml}</div>` : ''}
@@ -205,24 +217,24 @@ function renderPaginated(d) {
   `;
 
   if (d.intro) {
-    blocks.push(sectionTitle('1', 'Introdução'));
+    blocks.push(sectionTitle('1', d.introTitle || 'Introdução'));
     d.intro.split('\n\n').forEach(p => {
       if(p.trim()) blocks.push(`<p class="report-text" style="margin-bottom: 12px;">${esc(p)}</p>`);
     });
   }
 
   if (d.objectives) {
-    blocks.push(sectionTitle('2', 'Objetivos'));
+    blocks.push(sectionTitle('2', d.objTitle || 'Objetivos'));
     blocks.push(`<ul class="report-list" style="margin-bottom: 24px;">${buildList(d.objectives)}</ul>`);
   }
 
   if (d.materials) {
-    blocks.push(sectionTitle('3', 'Materiais e Equipamentos'));
+    blocks.push(sectionTitle('3', d.matTitle || 'Materiais e Equipamentos'));
     blocks.push(`<ul class="report-list" style="margin-bottom: 24px;">${buildList(d.materials)}</ul>`);
   }
 
   if (d.methodSteps && d.methodSteps.length > 0) {
-    blocks.push(sectionTitle('4', 'Metodologia'));
+    blocks.push(sectionTitle('4', d.methTitle || 'Metodologia'));
     d.methodSteps.forEach(s => {
       if(s.title || s.body) {
         blocks.push(`
@@ -235,7 +247,7 @@ function renderPaginated(d) {
   }
 
   if (d.results && d.results.length > 0) {
-    blocks.push(sectionTitle('5', 'Resultados / Avaliações'));
+    blocks.push(sectionTitle('5', d.resTitle || 'Resultados / Avaliações'));
     d.results.forEach(r => {
       if(r.title || r.body) {
         blocks.push(`
@@ -251,21 +263,21 @@ function renderPaginated(d) {
   }
 
   if (d.discussion) {
-    blocks.push(sectionTitle('6', 'Discussão'));
+    blocks.push(sectionTitle('6', d.discTitle || 'Discussão'));
     d.discussion.split('\n\n').forEach(p => {
       if(p.trim()) blocks.push(`<p class="report-text" style="margin-bottom: 12px;">${esc(p)}</p>`);
     });
   }
 
   if (d.conclusion) {
-    blocks.push(sectionTitle('7', 'Conclusão'));
+    blocks.push(sectionTitle('7', d.concTitle || 'Conclusão'));
     d.conclusion.split('\n\n').forEach(p => {
       if(p.trim()) blocks.push(`<p class="report-text" style="margin-bottom: 12px;">${esc(p)}</p>`);
     });
   }
 
   if (d.references) {
-    blocks.push(sectionTitle('8', 'Referências'));
+    blocks.push(sectionTitle('8', d.refTitle || 'Referências Bibliográficas'));
     blocks.push(`<ul class="references-list" style="margin-bottom: 24px;">${buildRefs(d.references)}</ul>`);
   }
 
