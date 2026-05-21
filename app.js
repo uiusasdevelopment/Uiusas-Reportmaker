@@ -54,7 +54,7 @@ function addMethodStep(title = '', body = '') {
   updatePreview();
 }
 
-function addResult(title = '', body = '') {
+function addResult(title = '', body = '', base64Img = '') {
   resultCount++;
   const container = document.getElementById('results-container');
   const div = document.createElement('div');
@@ -69,9 +69,51 @@ function addResult(title = '', body = '') {
       </button>
     </div>
     <textarea class="result-body" rows="2" placeholder="Descreva o resultado ou avaliação esperada...">${esc(body)}</textarea>
+    <div class="result-image-uploader" style="margin-top: 8px;">
+      <input type="file" accept="image/*" class="result-img-input" style="display:none">
+      <input type="hidden" class="result-img-base64" value="${base64Img}">
+      <button class="btn-ghost btn-upload-img" style="font-size: 0.8rem; padding: 4px 8px;">📎 Adicionar Imagem</button>
+      <div class="img-preview-box" style="margin-top: 8px; position: relative; display: ${base64Img ? 'inline-block' : 'none'};">
+        <img class="img-preview-el" src="${base64Img}" style="max-width: 100%; max-height: 150px; border-radius: 4px; border: 1px solid rgba(150,150,150,0.2);">
+        <button class="btn-remove-img" style="position: absolute; top: -8px; right: -8px; background: #dc2626; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; padding: 0;">X</button>
+      </div>
+    </div>
   `;
   container.appendChild(div);
-  div.querySelectorAll('input,textarea').forEach(el => el.addEventListener('input', updatePreview));
+
+  const fileInput = div.querySelector('.result-img-input');
+  const base64Input = div.querySelector('.result-img-base64');
+  const btnUpload = div.querySelector('.btn-upload-img');
+  const btnRemove = div.querySelector('.btn-remove-img');
+  const imgPreviewBox = div.querySelector('.img-preview-box');
+  const imgPreviewEl = div.querySelector('.img-preview-el');
+
+  btnUpload.addEventListener('click', () => fileInput.click());
+
+  fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        const b64 = evt.target.result;
+        base64Input.value = b64;
+        imgPreviewEl.src = b64;
+        imgPreviewBox.style.display = 'inline-block';
+        updatePreview();
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+
+  btnRemove.addEventListener('click', () => {
+    base64Input.value = '';
+    imgPreviewEl.src = '';
+    imgPreviewBox.style.display = 'none';
+    fileInput.value = '';
+    updatePreview();
+  });
+
+  div.querySelectorAll('input[type="text"],textarea').forEach(el => el.addEventListener('input', updatePreview));
   updatePreview();
 }
 
@@ -104,6 +146,7 @@ function collectData() {
     results.push({
       title: r.querySelector('.result-title').value.trim(),
       body: r.querySelector('.result-body').value.trim(),
+      image: r.querySelector('.result-img-base64').value
     });
   });
 
@@ -249,14 +292,15 @@ function renderPaginated(d) {
   if (d.results && d.results.length > 0) {
     blocks.push(sectionTitle('5', d.resTitle || 'Resultados / Avaliações'));
     d.results.forEach(r => {
-      if(r.title || r.body) {
+      if(r.title || r.body || r.image) {
         blocks.push(`
-        <div class="result-card" style="margin-bottom: 12px;">
+        <div class="result-card" style="margin-bottom: 16px;">
           <div class="result-card-header">
             <div class="result-card-dot"></div>
             <div class="result-card-title">${esc(r.title)}</div>
           </div>
-          <div class="result-card-body">${esc(r.body)}</div>
+          ${r.body ? `<div class="result-card-body">${esc(r.body)}</div>` : ''}
+          ${r.image ? `<div class="result-card-image" style="margin-top: 12px; text-align: center;"><img src="${r.image}" style="max-width: 100%; max-height: 350px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid rgba(150,150,150,0.1);"></div>` : ''}
         </div>`);
       }
     });
@@ -561,7 +605,7 @@ function loadData(d) {
 
   document.getElementById('results-container').innerHTML = '';
   resultCount = 0;
-  (d.results || []).forEach(r => addResult(r.title, r.body));
+  (d.results || []).forEach(r => addResult(r.title, r.body, r.image));
 
   if (d.colorTheme) applyTheme(d.colorTheme);
   else updatePreview();
