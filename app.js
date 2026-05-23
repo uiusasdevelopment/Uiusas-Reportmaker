@@ -496,13 +496,6 @@ function renderPaginated(d) {
       .report-footer { background: #1a1515; border-top: 2px solid #5e0000; }
     `;
   } else if (theme === 'tlou') {
-    pageBg = '#2a2d24'; pageText = '#b0c4b1';
-    extraCss = `
-      body, .a4-page { background-color: #2a2d24 !important; background-image: radial-gradient(circle, #1f221a 0%, transparent 60%); color: #b0c4b1; font-family: 'Inter', sans-serif; }
-      .report-cover { border-bottom: 2px solid #4a5d23; text-align: center; }
-      .report-badge { border: 2px solid #4a5d23; color: #d4e09b; border-radius: 5px; background: rgba(31, 34, 26, 0.8); }
-      .report-cover-title { color: #d4e09b; font-family: 'Impact', sans-serif; font-size: 2.5rem; letter-spacing: 2px; }
-      .report-cover-theme { color: #788a63; font-family: 'Inter', sans-serif; }
     pageBg = '#2a2d24'; pageText = '#d4e09b';
     extraCss = `
       body, .a4-page { background: #2a2d24 !important; color: #d4e09b; font-family: 'Inter', sans-serif; }
