@@ -25,6 +25,17 @@ const themeAccents = {
   hexatombe: { accent: '#ff2a2a', accent2: '#cc2222' },
   sinais:  { accent: '#00ffaa', accent2: '#00cc88' },
   nier:    { accent: '#4a4a4a', accent2: '#2a2a2a' },
+  'vintage-med': { accent: '#c0392b', accent2: '#8b0000' },
+  netter:  { accent: '#8b6b4a', accent2: '#2a221b' },
+  hitech:  { accent: '#00f0ff', accent2: '#0088ff' },
+  pipboy:  { accent: '#4aff4a', accent2: '#2ecc2e' },
+  bloodborne: { accent: '#5e0000', accent2: '#8b0000' },
+  tlou:    { accent: '#788a63', accent2: '#4a5d23' },
+  genshin: { accent: '#8b7355', accent2: '#d4a351' },
+  grimorio: { accent: '#8b0000', accent2: '#f4c430' },
+  taverna: { accent: '#8b4513', accent2: '#b8860b' },
+  vaporwave: { accent: '#00ffff', accent2: '#ff00ff' },
+  steampunk: { accent: '#d2691e', accent2: '#cd853f' }
 };
 
 function applyTheme(name) {
@@ -388,6 +399,215 @@ function renderPaginated(d) {
       .result-card-title { color: #2de27b; }
       .report-text, .report-list li, .method-step-card-body, .result-card-body, .references-list li { color: #d4e8d9; position: relative; z-index: 1; border-bottom-color: rgba(45, 226, 123, 0.1); }
       .report-footer { background: rgba(3, 17, 9, 0.9); border-top: 1px solid rgba(45, 226, 123, 0.3); position: relative; z-index: 1; }
+    `;
+  } else if (theme === 'vintage-med') {
+    pageBg = '#f5f0e6'; pageText = '#2c3e50';
+    extraCss = `
+      body, .a4-page { background-color: #f5f0e6 !important; background-image: repeating-linear-gradient(transparent, transparent 31px, #a0d8ef 31px, #a0d8ef 32px); background-size: 100% 32px; color: #2c3e50; font-family: 'Special Elite', monospace; }
+      .report-cover { border-bottom: 2px solid #2980b9; text-align: center; }
+      .report-badge { border: 2px solid #2980b9; color: #c0392b; border-radius: 5px; }
+      .report-cover-title { color: #8b0000; font-family: 'Special Elite', monospace; text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); font-size: 2.2rem; }
+      .report-cover-theme { color: #c0392b; font-family: 'Special Elite', monospace; font-weight: 600; }
+      .report-meta-item { background: rgba(255, 255, 255, 0.5); border: 1px solid #2980b9; border-radius: 5px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; text-align: center; }
+      .report-meta-label { color: #c0392b; }
+      .report-meta-value { color: #2c3e50; }
+      .report-section-title { color: #8b0000; font-family: 'Special Elite', monospace; border-bottom: 2px solid #2980b9; }
+      .section-number-badge { box-shadow: 0 4px 6px rgba(0,0,0,0.1); background: #c0392b !important; color: #fff; }
+      .method-step-card, .result-card { background: rgba(255, 255, 255, 0.7); border: 1px solid #2980b9; border-radius: 5px; }
+      .method-step-card-title, .result-card-header { background: rgba(255, 255, 255, 0.9) !important; color: #c0392b; border-bottom: 1px solid #2980b9; font-family: 'Special Elite', monospace; }
+      .result-card-title { color: #c0392b; }
+      .report-text, .report-list li, .method-step-card-body, .result-card-body, .references-list li { color: #2c3e50; border-bottom-color: #a0d8ef; }
+      .report-footer { background: #f5f0e6; border-top: 2px solid #2980b9; }
+    `;
+  } else if (theme === 'netter') {
+    pageBg = '#f9f6f0'; pageText = '#3e3832';
+    extraCss = `
+      body, .a4-page { background-color: #f9f6f0 !important; background-image: radial-gradient(#d4c5b3 1px, transparent 1px); background-size: 20px 20px; color: #3e3832; font-family: 'Inter', sans-serif; }
+      .report-cover { border-bottom: 2px solid #8b6b4a; text-align: center; }
+      .report-badge { border: 2px solid #d4c5b3; color: #8b6b4a; border-radius: 5px; }
+      .report-cover-title { color: #2a221b; font-family: 'Playfair Display', serif; font-size: 2.2rem; }
+      .report-cover-theme { color: #8b6b4a; font-family: 'Inter', sans-serif; }
+      .report-meta-item { background: rgba(255, 255, 255, 0.5); border: 1px solid #d4c5b3; border-radius: 5px; width: 100%; text-align: center; }
+      .report-meta-label { color: #8b6b4a; }
+      .report-meta-value { color: #3e3832; }
+      .report-section-title { color: #2a221b; font-family: 'Playfair Display', serif; border-bottom: 2px solid #d4c5b3; }
+      .section-number-badge { background: #8b6b4a !important; color: #fff; }
+      .method-step-card, .result-card { background: rgba(255, 255, 255, 0.7); border: 1px solid #d4c5b3; border-radius: 5px; }
+      .method-step-card-title, .result-card-header { background: rgba(255, 255, 255, 0.9) !important; color: #8b6b4a; border-bottom: 1px solid #d4c5b3; }
+      .result-card-title { color: #8b6b4a; }
+      .report-text, .report-list li, .method-step-card-body, .result-card-body, .references-list li { color: #3e3832; border-bottom-color: #d4c5b3; }
+      .report-footer { background: #f9f6f0; border-top: 2px solid #d4c5b3; }
+    `;
+  } else if (theme === 'hitech') {
+    pageBg = '#0a1128'; pageText = '#e0e7ff';
+    extraCss = `
+      body, .a4-page { background-color: #0a1128 !important; background-image: linear-gradient(0deg, transparent 24%, rgba(0, 240, 255, 0.1) 25%, rgba(0, 240, 255, 0.1) 26%, transparent 27%, transparent 74%, rgba(0, 240, 255, 0.1) 75%, rgba(0, 240, 255, 0.1) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(0, 240, 255, 0.1) 25%, rgba(0, 240, 255, 0.1) 26%, transparent 27%, transparent 74%, rgba(0, 240, 255, 0.1) 75%, rgba(0, 240, 255, 0.1) 76%, transparent 77%, transparent); background-size: 40px 40px; color: #e0e7ff; font-family: 'Inter', sans-serif; }
+      .report-cover { border-bottom: 2px solid #0088ff; text-align: center; }
+      .report-badge { border: 2px solid #0088ff; color: #00f0ff; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 240, 255, 0.3); }
+      .report-cover-title { color: #00f0ff; font-family: 'Orbitron', sans-serif; text-shadow: 0 0 10px rgba(0, 240, 255, 0.5); font-size: 2.2rem; }
+      .report-cover-theme { color: #00f0ff; font-family: 'Inter', sans-serif; }
+      .report-meta-item { background: rgba(10, 17, 40, 0.8); border: 1px solid #0088ff; border-radius: 5px; width: 100%; text-align: center; box-shadow: 0 0 10px rgba(0, 136, 255, 0.2); }
+      .report-meta-label { color: #00f0ff; }
+      .report-meta-value { color: #e0e7ff; }
+      .report-section-title { color: #00f0ff; font-family: 'Orbitron', sans-serif; border-bottom: 2px solid #0088ff; text-shadow: 0 0 5px rgba(0, 240, 255, 0.3); }
+      .section-number-badge { background: #0088ff !important; color: #fff; box-shadow: 0 0 10px rgba(0, 136, 255, 0.5); }
+      .method-step-card, .result-card { background: rgba(10, 17, 40, 0.8); border: 1px solid #0088ff; border-radius: 5px; }
+      .method-step-card-title, .result-card-header { background: rgba(0, 136, 255, 0.2) !important; color: #00f0ff; border-bottom: 1px solid #0088ff; font-family: 'Orbitron', sans-serif; }
+      .result-card-title { color: #00f0ff; }
+      .report-text, .report-list li, .method-step-card-body, .result-card-body, .references-list li { color: #e0e7ff; border-bottom-color: rgba(0, 136, 255, 0.3); }
+      .report-footer { background: #0a1128; border-top: 2px solid #0088ff; }
+    `;
+  } else if (theme === 'pipboy') {
+    pageBg = '#051405'; pageText = '#4aff4a';
+    extraCss = `
+      body, .a4-page { background-color: #051405 !important; background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(74, 255, 74, 0.05) 2px, rgba(74, 255, 74, 0.05) 4px); background-size: 100% 4px; color: #4aff4a; font-family: 'Courier New', monospace; text-shadow: 0 0 2px #4aff4a; }
+      .report-cover { border-bottom: 2px solid #4aff4a; text-align: center; }
+      .report-badge { border: 2px solid #4aff4a; color: #4aff4a; border-radius: 0; box-shadow: 0 0 5px #4aff4a; background: #051405; }
+      .report-cover-title { color: #4aff4a; font-family: 'Courier New', monospace; text-shadow: 0 0 8px #4aff4a; font-size: 2.2rem; }
+      .report-cover-theme { color: #4aff4a; font-family: 'Courier New', monospace; }
+      .report-meta-item { background: #051405; border: 1px solid #4aff4a; border-radius: 0; width: 100%; text-align: center; box-shadow: 0 0 5px #4aff4a; }
+      .report-meta-label { color: #4aff4a; font-weight: bold; }
+      .report-meta-value { color: #4aff4a; }
+      .report-section-title { color: #4aff4a; font-family: 'Courier New', monospace; border-bottom: 2px solid #4aff4a; text-shadow: 0 0 5px #4aff4a; }
+      .section-number-badge { background: #4aff4a !important; color: #051405; box-shadow: 0 0 5px #4aff4a; border-radius: 0; }
+      .method-step-card, .result-card { background: #051405; border: 1px solid #4aff4a; border-radius: 0; box-shadow: 0 0 5px rgba(74, 255, 74, 0.2); }
+      .method-step-card-title, .result-card-header { background: rgba(74, 255, 74, 0.1) !important; color: #4aff4a; border-bottom: 1px solid #4aff4a; font-family: 'Courier New', monospace; }
+      .result-card-title { color: #4aff4a; }
+      .report-text, .report-list li, .method-step-card-body, .result-card-body, .references-list li { color: #4aff4a; border-bottom-color: rgba(74, 255, 74, 0.3); }
+      .report-footer { background: #051405; border-top: 2px solid #4aff4a; }
+    `;
+  } else if (theme === 'bloodborne') {
+    pageBg = '#1a1515'; pageText = '#c0b0a0';
+    extraCss = `
+      body, .a4-page { background-color: #1a1515 !important; color: #c0b0a0; font-family: 'Playfair Display', serif; }
+      .report-cover { border-bottom: 2px solid #5e0000; text-align: center; }
+      .report-badge { border: 2px solid #5e0000; color: #8b0000; border-radius: 0; background: transparent; }
+      .report-cover-title { color: #8b0000; font-family: 'Cinzel', serif; font-size: 2.2rem; }
+      .report-cover-theme { color: #5e0000; font-family: 'Playfair Display', serif; }
+      .report-meta-item { background: #1a1515; border: 1px solid #5e0000; border-radius: 0; width: 100%; text-align: center; }
+      .report-meta-label { color: #8b0000; }
+      .report-meta-value { color: #c0b0a0; }
+      .report-section-title { color: #8b0000; font-family: 'Cinzel', serif; border-bottom: 2px solid #5e0000; }
+      .section-number-badge { background: #5e0000 !important; color: #c0b0a0; border-radius: 0; }
+      .method-step-card, .result-card { background: #1a1515; border: 1px solid #5e0000; border-radius: 0; }
+      .method-step-card-title, .result-card-header { background: #261b1b !important; color: #8b0000; border-bottom: 1px solid #5e0000; font-family: 'Cinzel', serif; }
+      .result-card-title { color: #8b0000; }
+      .report-text, .report-list li, .method-step-card-body, .result-card-body, .references-list li { color: #c0b0a0; border-bottom-color: #5e0000; }
+      .report-footer { background: #1a1515; border-top: 2px solid #5e0000; }
+    `;
+  } else if (theme === 'tlou') {
+    pageBg = '#2a2d24'; pageText = '#b0c4b1';
+    extraCss = `
+      body, .a4-page { background-color: #2a2d24 !important; background-image: radial-gradient(circle, #1f221a 0%, transparent 60%); color: #b0c4b1; font-family: 'Inter', sans-serif; }
+      .report-cover { border-bottom: 2px solid #4a5d23; text-align: center; }
+      .report-badge { border: 2px solid #4a5d23; color: #d4e09b; border-radius: 5px; background: rgba(31, 34, 26, 0.8); }
+      .report-cover-title { color: #d4e09b; font-family: 'Impact', sans-serif; font-size: 2.5rem; letter-spacing: 2px; }
+      .report-cover-theme { color: #788a63; font-family: 'Inter', sans-serif; }
+      .report-meta-item { background: rgba(31, 34, 26, 0.8); border: 1px solid #4a5d23; border-radius: 5px; width: 100%; text-align: center; }
+      .report-meta-label { color: #d4e09b; }
+      .report-meta-value { color: #b0c4b1; }
+      .report-section-title { color: #d4e09b; font-family: 'Impact', sans-serif; border-bottom: 2px solid #4a5d23; letter-spacing: 1px; }
+      .section-number-badge { background: #4a5d23 !important; color: #fff; }
+      .method-step-card, .result-card { background: rgba(31, 34, 26, 0.8); border: 1px solid #4a5d23; border-radius: 5px; }
+      .method-step-card-title, .result-card-header { background: rgba(74, 93, 35, 0.2) !important; color: #d4e09b; border-bottom: 1px solid #4a5d23; }
+      .result-card-title { color: #d4e09b; }
+      .report-text, .report-list li, .method-step-card-body, .result-card-body, .references-list li { color: #b0c4b1; border-bottom-color: rgba(74, 93, 35, 0.3); }
+      .report-footer { background: #2a2d24; border-top: 2px solid #4a5d23; }
+    `;
+  } else if (theme === 'genshin') {
+    pageBg = '#faf5eb'; pageText = '#595349';
+    extraCss = `
+      body, .a4-page { background-color: #faf5eb !important; background-image: radial-gradient(circle, #d4a351 1px, transparent 1px); background-size: 30px 30px; color: #595349; font-family: 'Inter', sans-serif; }
+      .report-cover { border-bottom: 2px solid #d4a351; text-align: center; }
+      .report-badge { border: 2px solid #d4a351; color: #8b7355; border-radius: 20px; background: #fff; }
+      .report-cover-title { color: #d4a351; font-family: 'Cinzel', serif; font-size: 2.2rem; }
+      .report-cover-theme { color: #8b7355; font-family: 'Inter', sans-serif; }
+      .report-meta-item { background: rgba(255, 255, 255, 0.8); border: 1px solid #d4a351; border-radius: 10px; width: 100%; text-align: center; box-shadow: 0 0 10px rgba(212, 163, 81, 0.1); }
+      .report-meta-label { color: #d4a351; }
+      .report-meta-value { color: #595349; }
+      .report-section-title { color: #d4a351; font-family: 'Cinzel', serif; border-bottom: 2px solid #d4a351; }
+      .section-number-badge { background: #d4a351 !important; color: #fff; border-radius: 50%; }
+      .method-step-card, .result-card { background: rgba(255, 255, 255, 0.8); border: 1px solid #d4a351; border-radius: 10px; }
+      .method-step-card-title, .result-card-header { background: rgba(212, 163, 81, 0.1) !important; color: #8b7355; border-bottom: 1px solid #d4a351; font-family: 'Cinzel', serif; }
+      .result-card-title { color: #8b7355; }
+      .report-text, .report-list li, .method-step-card-body, .result-card-body, .references-list li { color: #595349; border-bottom-color: rgba(212, 163, 81, 0.2); }
+      .report-footer { background: #faf5eb; border-top: 2px solid #d4a351; }
+    `;
+  } else if (theme === 'grimorio') {
+    pageBg = '#4a3b2c'; pageText = '#e8dcc4';
+    extraCss = `
+      body, .a4-page { background-color: #4a3b2c !important; background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.1) 10px, rgba(0,0,0,0.1) 20px); color: #e8dcc4; font-family: 'Playfair Display', serif; }
+      .report-cover { border-bottom: 2px solid #8b0000; text-align: center; }
+      .report-badge { border: 2px solid #8b0000; color: #f4c430; border-radius: 0; background: #3a2b1c; }
+      .report-cover-title { color: #f4c430; font-family: 'Metal Mania', cursive; font-size: 2.8rem; letter-spacing: 2px; }
+      .report-cover-theme { color: #8b0000; font-family: 'Playfair Display', serif; }
+      .report-meta-item { background: #3a2b1c; border: 1px solid #8b0000; border-radius: 0; width: 100%; text-align: center; box-shadow: 0 0 10px rgba(244, 196, 48, 0.2); }
+      .report-meta-label { color: #f4c430; }
+      .report-meta-value { color: #e8dcc4; }
+      .report-section-title { color: #f4c430; font-family: 'Metal Mania', cursive; border-bottom: 2px solid #8b0000; }
+      .section-number-badge { background: #8b0000 !important; color: #f4c430; border-radius: 0; }
+      .method-step-card, .result-card { background: #3a2b1c; border: 1px solid #8b0000; border-radius: 0; }
+      .method-step-card-title, .result-card-header { background: rgba(139, 0, 0, 0.2) !important; color: #f4c430; border-bottom: 1px solid #8b0000; font-family: 'Metal Mania', cursive; }
+      .result-card-title { color: #f4c430; }
+      .report-text, .report-list li, .method-step-card-body, .result-card-body, .references-list li { color: #e8dcc4; border-bottom-color: rgba(139, 0, 0, 0.3); }
+      .report-footer { background: #4a3b2c; border-top: 2px solid #8b0000; }
+    `;
+  } else if (theme === 'taverna') {
+    pageBg = '#5c4033'; pageText = '#f0e6d2';
+    extraCss = `
+      body, .a4-page { background-color: #5c4033 !important; color: #f0e6d2; font-family: 'Inter', sans-serif; }
+      .report-cover { border-bottom: 2px solid #8b4513; text-align: center; }
+      .report-badge { border: 2px solid #8b4513; color: #b8860b; border-radius: 5px; background: #4a332a; }
+      .report-cover-title { color: #b8860b; font-family: 'Oswald', sans-serif; font-size: 2.5rem; text-transform: uppercase; }
+      .report-cover-theme { color: #8b4513; font-family: 'Inter', sans-serif; }
+      .report-meta-item { background: #4a332a; border: 2px solid #8b4513; border-radius: 5px; width: 100%; text-align: center; }
+      .report-meta-label { color: #b8860b; }
+      .report-meta-value { color: #f0e6d2; }
+      .report-section-title { color: #b8860b; font-family: 'Oswald', sans-serif; border-bottom: 2px solid #8b4513; text-transform: uppercase; }
+      .section-number-badge { background: #8b4513 !important; color: #f0e6d2; }
+      .method-step-card, .result-card { background: #4a332a; border: 2px solid #8b4513; border-radius: 5px; }
+      .method-step-card-title, .result-card-header { background: rgba(139, 69, 19, 0.3) !important; color: #b8860b; border-bottom: 2px solid #8b4513; font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+      .result-card-title { color: #b8860b; }
+      .report-text, .report-list li, .method-step-card-body, .result-card-body, .references-list li { color: #f0e6d2; border-bottom-color: #8b4513; }
+      .report-footer { background: #5c4033; border-top: 2px solid #8b4513; }
+    `;
+  } else if (theme === 'vaporwave') {
+    pageBg = '#2a0845'; pageText = '#00ffff';
+    extraCss = `
+      body, .a4-page { background-color: #2a0845 !important; background-image: linear-gradient(0deg, transparent 24%, rgba(255, 0, 255, 0.3) 25%, rgba(255, 0, 255, 0.3) 26%, transparent 27%, transparent 74%, rgba(255, 0, 255, 0.3) 75%, rgba(255, 0, 255, 0.3) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(0, 255, 255, 0.3) 25%, rgba(0, 255, 255, 0.3) 26%, transparent 27%, transparent 74%, rgba(0, 255, 255, 0.3) 75%, rgba(0, 255, 255, 0.3) 76%, transparent 77%, transparent); background-size: 50px 50px; color: #00ffff; font-family: 'Inter', sans-serif; }
+      .report-cover { border-bottom: 2px solid #ff00ff; text-align: center; }
+      .report-badge { border: 2px solid #ff00ff; color: #00ffff; border-radius: 0; background: rgba(42, 8, 69, 0.8); box-shadow: 2px 2px 0 #00ffff; }
+      .report-cover-title { color: #ff00ff; font-family: 'Inter', sans-serif; font-size: 2.5rem; text-transform: uppercase; font-style: italic; text-shadow: 2px 2px 0 #00ffff; }
+      .report-cover-theme { color: #00ffff; font-family: 'Inter', sans-serif; }
+      .report-meta-item { background: rgba(42, 8, 69, 0.8); border: 2px solid #ff00ff; border-radius: 0; width: 100%; text-align: center; box-shadow: 4px 4px 0 rgba(0, 255, 255, 0.5); }
+      .report-meta-label { color: #ff00ff; }
+      .report-meta-value { color: #00ffff; }
+      .report-section-title { color: #ff00ff; font-family: 'Inter', sans-serif; font-style: italic; border-bottom: 2px solid #ff00ff; text-shadow: 2px 2px 0 rgba(0, 255, 255, 0.5); }
+      .section-number-badge { background: #ff00ff !important; color: #2a0845; border-radius: 0; }
+      .method-step-card, .result-card { background: rgba(42, 8, 69, 0.8); border: 2px solid #ff00ff; border-radius: 0; box-shadow: 4px 4px 0 rgba(0, 255, 255, 0.3); }
+      .method-step-card-title, .result-card-header { background: rgba(255, 0, 255, 0.2) !important; color: #ff00ff; border-bottom: 2px solid #ff00ff; font-style: italic; }
+      .result-card-title { color: #ff00ff; }
+      .report-text, .report-list li, .method-step-card-body, .result-card-body, .references-list li { color: #00ffff; border-bottom-color: rgba(255, 0, 255, 0.3); }
+      .report-footer { background: #2a0845; border-top: 2px solid #ff00ff; }
+    `;
+  } else if (theme === 'steampunk') {
+    pageBg = '#8b5a2b'; pageText = '#ffdead';
+    extraCss = `
+      body, .a4-page { background-color: #8b5a2b !important; background-image: radial-gradient(circle, #5c3a21 2px, transparent 2.5px); background-size: 20px 20px; color: #ffdead; font-family: 'Playfair Display', serif; }
+      .report-cover { border-bottom: 2px solid #cd853f; text-align: center; }
+      .report-badge { border: 2px solid #cd853f; color: #d2691e; border-radius: 5px; background: #6b4423; box-shadow: 0 4px 6px rgba(0,0,0,0.5); }
+      .report-cover-title { color: #cd853f; font-family: 'Playfair Display', serif; font-size: 2.5rem; text-shadow: 1px 1px 0 #000; }
+      .report-cover-theme { color: #d2691e; font-family: 'Playfair Display', serif; }
+      .report-meta-item { background: #6b4423; border: 2px solid #cd853f; border-radius: 5px; width: 100%; text-align: center; box-shadow: inset 0 0 10px rgba(0,0,0,0.5); }
+      .report-meta-label { color: #cd853f; }
+      .report-meta-value { color: #ffdead; }
+      .report-section-title { color: #cd853f; font-family: 'Playfair Display', serif; border-bottom: 2px dashed #cd853f; }
+      .section-number-badge { background: #cd853f !important; color: #2b1d12; border-radius: 50%; border: 2px solid #8b5a2b; box-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+      .method-step-card, .result-card { background: #6b4423; border: 2px solid #cd853f; border-radius: 5px; box-shadow: 0 4px 8px rgba(0,0,0,0.5); }
+      .method-step-card-title, .result-card-header { background: rgba(205, 133, 63, 0.2) !important; color: #cd853f; border-bottom: 2px solid #cd853f; }
+      .result-card-title { color: #cd853f; }
+      .report-text, .report-list li, .method-step-card-body, .result-card-body, .references-list li { color: #ffdead; border-bottom-color: rgba(205, 133, 63, 0.3); }
+      .report-footer { background: #8b5a2b; border-top: 2px solid #cd853f; }
     `;
   } else if (theme === 'caderno') {
     pageBg = '#faf8f5'; pageText = '#1a1a2a';
