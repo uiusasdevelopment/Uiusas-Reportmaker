@@ -12,7 +12,18 @@ const themeAccents = {
   amber:   { accent: '#d97706', accent2: '#b45309' },
   emerald: { accent: '#059669', accent2: '#047857' },
   slate:   { accent: '#475569', accent2: '#334155' },
-  sinais:  { accent: '#059669', accent2: '#022c22' },
+  caderno: { accent: '#2563eb', accent2: '#1d4ed8' },
+  moderno: { accent: '#3b82f6', accent2: '#2563eb' },
+  'belle-epoque': { accent: '#8b6b4a', accent2: '#5c432d' },
+  cyberpunk: { accent: '#00f0ff', accent2: '#00b3cc' },
+  minimalista: { accent: '#1a1a1a', accent2: '#000000' },
+  'resident-evil': { accent: '#ffffff', accent2: '#cccccc' },
+  'clair-obscur': { accent: '#b78f61', accent2: '#8b6842' },
+  pokemon: { accent: '#00ffaa', accent2: '#00cc88' },
+  'pokemon-sword': { accent: '#e03a5f', accent2: '#b02a48' },
+  silksong: { accent: '#dbb258', accent2: '#a8863f' },
+  hexatombe: { accent: '#ff2a2a', accent2: '#cc2222' },
+  sinais:  { accent: '#00ffaa', accent2: '#00cc88' },
   nier:    { accent: '#4a4a4a', accent2: '#2a2a2a' },
 };
 
@@ -330,7 +341,9 @@ function renderPaginated(d) {
   let pageText = '#1a1a2a';
   let extraCss = '';
 
-  if (isNier) {
+  const theme = d.colorTheme;
+
+  if (theme === 'nier') {
     pageBg = '#dad4bb'; pageText = '#444';
     extraCss = `
       body, .a4-page { background: #dad4bb !important; color: #444; font-family: 'Arial', sans-serif; border-radius: 0; }
@@ -354,27 +367,210 @@ function renderPaginated(d) {
       .list-bullet { background: #444 !important; border-radius: 0; }
       .ref-num { color: #444 !important; }
     `;
-  } else if (isSinais) {
-    pageBg = '#050505'; pageText = '#e0e0e0';
+  } else if (theme === 'sinais') {
+    pageBg = '#031109'; pageText = '#d4e8d9';
     extraCss = `
-      body, .a4-page { background: #050505 !important; color: #e0e0e0; }
-      .report-cover { background: radial-gradient(circle at 50% 150%, #022c22, #000); border-bottom: 1px solid #064e3b; }
-      .report-cover-title { color: #fff; text-shadow: 0 0 10px rgba(5,150,105,0.5); font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: 0.1em; }
-      .report-cover-theme { color: #a7f3d0; }
-      .report-meta-item { background: rgba(5,150,105,0.05); border: 1px solid rgba(5,150,105,0.3); }
-      .report-meta-label { color: #6ee7b7; }
+      body, .a4-page { background-color: #031109 !important; background: url('assets/bg-sinais.png') center/cover no-repeat; color: #d4e8d9; font-family: 'Inter', sans-serif; }
+      .a4-page::before { content:''; position:absolute; inset:0; box-shadow: inset 0 0 160px rgba(0, 5, 2, 0.95); pointer-events:none; z-index:0; }
+      .report-cover { background: transparent; border-bottom: none; position: relative; z-index: 1; text-align: center; display: flex; flex-direction: column; align-items: center; }
+      .report-badge { border: 1px solid rgba(45, 226, 123, 0.3); color: #2de27b; background: rgba(3, 17, 9, 0.7); border-radius: 5px; }
+      .report-cover-title { color: #ffffff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 30px rgba(45, 226, 123, 0.9), 0 0 50px rgba(45, 226, 123, 0.6); font-family: 'Adobe Hebrew', 'Times New Roman', serif; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; font-size: 2.2rem; }
+      .report-cover-theme { color: #a3e0bd; font-family: 'Inter', sans-serif; font-weight: 300; letter-spacing: 5px; text-transform: uppercase; background: rgba(3, 17, 9, 0.5); padding: 5px 15px; border-radius: 8px; display: inline-block; }
+      .report-meta-grid { width: 100%; max-width: 500px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+      .report-meta-item { background: rgba(3, 17, 9, 0.7); border: 1px solid rgba(45, 226, 123, 0.3); border-radius: 8px; backdrop-filter: blur(4px); box-shadow: 0 0 20px rgba(0, 0, 0, 0.9); width: 100%; text-align: center; }
+      .report-meta-label { color: #2de27b; }
+      .report-meta-value { color: #ffffff; }
+      .report-section-title { color: #ffffff; font-family: 'Adobe Hebrew', 'Times New Roman', serif; border-image: none !important; border-bottom: 1px solid rgba(45, 226, 123, 0.3); position: relative; z-index: 1; }
+      .section-number-badge { box-shadow: 0 0 15px rgba(45, 226, 123, 0.5); background: #2de27b !important; color: #030805; }
+      .method-step-card, .result-card { background: rgba(5, 15, 10, 0.85); border: 1px solid rgba(45, 226, 123, 0.3); position: relative; z-index: 1; border-radius: 8px; }
+      .method-step-card-title { color: #2de27b; background: rgba(3, 17, 9, 0.9) !important; font-family: 'Inter', sans-serif; }
+      .result-card-header { background: rgba(3, 17, 9, 0.9) !important; border-bottom: 1px solid rgba(45, 226, 123, 0.2); }
+      .result-card-title { color: #2de27b; }
+      .report-text, .report-list li, .method-step-card-body, .result-card-body, .references-list li { color: #d4e8d9; position: relative; z-index: 1; border-bottom-color: rgba(45, 226, 123, 0.1); }
+      .report-footer { background: rgba(3, 17, 9, 0.9); border-top: 1px solid rgba(45, 226, 123, 0.3); position: relative; z-index: 1; }
+    `;
+  } else if (theme === 'caderno') {
+    pageBg = '#faf8f5'; pageText = '#1a1a2a';
+    extraCss = `
+      body, .a4-page { background: #faf8f5 !important; color: #1a1a2a; }
+      .a4-page { background-image: repeating-linear-gradient(transparent, transparent 31px, #e5e7eb 31px, #e5e7eb 32px) !important; background-position: 0 40px; }
+      .report-cover { background: #fff; border-bottom: 4px solid #2563eb; }
+      .report-cover-title { font-family: 'Playfair Display', serif; color: #1e3a8a; }
+      .method-step-card, .result-card { background: #fff; border: 1px solid #d1d5db; box-shadow: 2px 2px 0px rgba(37,99,235,0.1); }
+      .report-footer { background: #fff; border-top: 2px dashed #d1d5db; }
+      .report-text, .method-step-card-body, .result-card-body { line-height: 32px; font-family: 'Inter', sans-serif; }
+    `;
+  } else if (theme === 'cyberpunk') {
+    pageBg = '#09090b'; pageText = '#e0e0e0';
+    extraCss = `
+      body, .a4-page { background: #09090b !important; color: #e0e0e0; font-family: 'Inter', sans-serif; }
+      .a4-page::before { content:''; position:absolute; inset:0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 240, 255, 0.05) 2px, rgba(0, 240, 255, 0.05) 4px); pointer-events:none; z-index:0; }
+      .report-cover { background: #111; border-bottom: 2px solid #00f0ff; position: relative; z-index: 1; }
+      .report-cover-title { color: #fff; text-transform: uppercase; font-weight: 800; letter-spacing: 2px; text-shadow: 2px 2px 0px #00f0ff, -2px -2px 0px #ff00f0; }
+      .report-section-title { color: #09090b; background: #00f0ff; display: inline-flex; padding: 5px 15px; transform: skew(-10deg); border-image: none !important; border-bottom: none; margin-bottom: 20px; position: relative; z-index: 1; }
+      .report-section-title > * { transform: skew(10deg); display: inline-block; }
+      .section-number-badge { background: #09090b !important; color: #00f0ff; }
+      .method-step-card, .result-card { background: rgba(9, 9, 11, 0.7); border: 1px solid #333; border-left: 2px solid #00f0ff; position: relative; z-index: 1; backdrop-filter: blur(10px); }
+      .method-step-card-title, .result-card-header { background: rgba(0, 240, 255, 0.1) !important; color: #00f0ff; }
+      .report-text, .report-list li, .references-list li { color: #ccc; position: relative; z-index: 1; }
+      .report-footer { background: #000; border-top: 1px solid #333; position: relative; z-index: 1; }
+    `;
+  } else if (theme === 'silksong') {
+    pageBg = '#120b12'; pageText = '#d4cbb8';
+    extraCss = `
+      body, .a4-page { background: #120b12 !important; color: #d4cbb8; font-family: 'Playfair Display', serif; }
+      .report-cover { background: #1a101a; border-bottom: 1px solid #dbb258; position: relative; z-index: 1; }
+      .report-cover-title { color: #dbb258; text-transform: uppercase; letter-spacing: 0.1em; text-shadow: 0 0 10px rgba(219, 178, 88, 0.3); }
+      .report-meta-item { background: transparent; border: 1px solid rgba(219, 178, 88, 0.3); }
+      .report-meta-label { color: #dbb258; }
       .report-meta-value { color: #fff; }
-      .report-section-title { color: #fff; }
-      .section-number-badge { box-shadow: 0 0 8px rgba(5,150,105,0.5); }
-      .report-text, .report-list li, .method-step-card-body, .result-card-body, .references-list li { color: #d1d5db; }
-      .method-step-card { border: 1px solid #1f2937; background: #0f172a; }
-      .method-step-card-title { color: #fff; }
-      .result-card { border: 1px solid #1f2937; background: #0f172a; }
-      .result-card-title { color: #fff; }
-      .report-footer { background: #000; border-top: 1px solid #1f2937; }
-      .report-badge { border: 1px solid rgba(5,150,105,0.4); color: #a7f3d0; }
-      .report-list li { border-bottom-color: #1f2937; }
-      .references-list li { border-bottom-color: #1f2937; }
+      .report-section-title { color: #dbb258; border-image: none !important; border-bottom: 1px solid rgba(219, 178, 88, 0.3); position: relative; z-index: 1; }
+      .section-number-badge { background: #dbb258 !important; color: #120b12; }
+      .method-step-card, .result-card { background: #1a101a; border: 1px solid rgba(219, 178, 88, 0.2); position: relative; z-index: 1; }
+      .method-step-card-title { color: #dbb258; background: rgba(219, 178, 88, 0.05) !important; }
+      .result-card-header { background: rgba(219, 178, 88, 0.1) !important; }
+      .result-card-title { color: #dbb258; }
+      .report-text, .report-list li, .references-list li { color: #b8b0a0; position: relative; z-index: 1; }
+      .report-footer { background: #0a060a; border-top: 1px solid rgba(219, 178, 88, 0.2); position: relative; z-index: 1; }
+    `;
+  } else if (theme === 'hexatombe') {
+    pageBg = '#0c0c0c'; pageText = '#d1d1d1';
+    extraCss = `
+      body, .a4-page { background: #0c0c0c !important; color: #d1d1d1; font-family: 'Inter', sans-serif; }
+      .a4-page::after { content:''; position:absolute; top:0; right:0; width: 300px; height: 300px; background: radial-gradient(circle, #ff2a2a 0%, transparent 70%); opacity: 0.05; pointer-events: none; z-index:0; }
+      .report-cover { background: #111; border-bottom: 2px solid #ff2a2a; position: relative; z-index: 1; }
+      .report-cover-title { color: #fff; font-weight: 800; letter-spacing: 2px; text-shadow: 3px 0px 0px #ff2a2a, -3px 0px 0px #2a2aff; }
+      .report-meta-item { background: transparent; border: 1px solid rgba(255, 42, 42, 0.3); }
+      .report-meta-label { color: #ff2a2a; }
+      .report-meta-value { color: #fff; }
+      .report-section-title { color: #fff; border-image: none !important; border-bottom: 1px solid #ff2a2a; position: relative; z-index: 1; }
+      .section-number-badge { background: #ff2a2a !important; color: #0c0c0c; box-shadow: 0 0 10px rgba(255,42,42,0.5); }
+      .method-step-card, .result-card { background: #111; border: 1px solid rgba(255, 42, 42, 0.2); position: relative; z-index: 1; border-left: 3px solid #ff2a2a; }
+      .method-step-card-title { color: #ff2a2a; background: rgba(255, 42, 42, 0.05) !important; }
+      .result-card-header { background: rgba(255, 42, 42, 0.1) !important; }
+      .result-card-title { color: #ff2a2a; }
+      .report-text, .report-list li, .references-list li { color: #aaa; position: relative; z-index: 1; border-bottom-color: #222; }
+      .report-footer { background: #000; border-top: 1px solid rgba(255, 42, 42, 0.2); position: relative; z-index: 1; }
+    `;
+  } else if (theme === 'resident-evil') {
+    pageBg = '#111111'; pageText = '#d4d4d4';
+    extraCss = `
+      body, .a4-page { background: #111111 !important; color: #d4d4d4; font-family: 'Arial Narrow', Arial, sans-serif; }
+      .a4-page::before { content:''; position:absolute; inset:0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 255, 255, 0.03) 2px, rgba(255, 255, 255, 0.03) 4px); pointer-events:none; z-index:0; }
+      .report-cover { background: #000; border-bottom: 1px dashed rgba(255,255,255,0.3); position: relative; z-index: 1; }
+      .report-cover-title { color: #fff; font-family: 'Courier New', Courier, monospace; text-transform: uppercase; }
+      .report-meta-item { background: transparent; border: 1px dashed rgba(255,255,255,0.3); }
+      .report-meta-label { color: #888; font-family: 'Courier New', Courier, monospace; }
+      .report-meta-value { color: #fff; }
+      .report-section-title { color: #fff; font-family: 'Courier New', Courier, monospace; border-image: none !important; border-bottom: 1px dashed rgba(255,255,255,0.3); position: relative; z-index: 1; }
+      .section-number-badge { background: #333 !important; color: #fff; border-radius: 0; }
+      .method-step-card, .result-card { background: #1a1a1a; border: 1px dashed rgba(255,255,255,0.2); position: relative; z-index: 1; border-left: none !important; border-radius: 0; }
+      .method-step-card-title { color: #fff; background: rgba(255,255,255,0.05) !important; font-family: 'Courier New', Courier, monospace; }
+      .result-card-header { background: rgba(255,255,255,0.1) !important; }
+      .result-card-title { color: #fff; font-family: 'Courier New', Courier, monospace; }
+      .report-text, .report-list li, .references-list li { color: #bbb; position: relative; z-index: 1; border-bottom-color: #222; }
+      .report-footer { background: #000; border-top: 1px dashed rgba(255,255,255,0.3); position: relative; z-index: 1; }
+    `;
+  } else if (theme === 'pokemon' || theme === 'pokemon-sword') {
+    const isSword = theme === 'pokemon-sword';
+    const pokeAccent = isSword ? '#e03a5f' : '#00ffaa';
+    const pokeBg = isSword ? '#05141c' : '#0a1118';
+    pageBg = pokeBg; pageText = '#d0dbe5';
+    extraCss = `
+      body, .a4-page { background: ${pokeBg} !important; color: #d0dbe5; font-family: 'Inter', sans-serif; }
+      .report-cover { background: #000; border-bottom: 4px solid ${pokeAccent}; position: relative; z-index: 1; }
+      .report-cover::after { content:''; position:absolute; bottom:0; left:0; right:0; height:10px; background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px); }
+      .report-cover-title { color: #fff; font-weight: 800; text-transform: uppercase; font-style: italic; }
+      .report-meta-item { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; }
+      .report-meta-label { color: ${pokeAccent}; }
+      .report-meta-value { color: #fff; }
+      .report-section-title { color: #fff; border-image: none !important; border-bottom: 2px solid ${pokeAccent}; position: relative; z-index: 1; font-style: italic; }
+      .section-number-badge { background: ${pokeAccent} !important; color: #000; border-radius: 10px; }
+      .method-step-card, .result-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); position: relative; z-index: 1; border-radius: 12px; overflow: hidden; border-left: 4px solid ${pokeAccent}; }
+      .method-step-card-title { color: #fff; background: rgba(255,255,255,0.05) !important; font-weight: 800; text-transform: uppercase; font-size: 0.8rem; }
+      .result-card-header { background: rgba(255,255,255,0.08) !important; }
+      .result-card-title { color: #fff; font-weight: 800; text-transform: uppercase; }
+      .report-text, .report-list li, .references-list li { color: #a0aebc; position: relative; z-index: 1; border-bottom-color: rgba(255,255,255,0.05); }
+      .report-footer { background: #000; border-top: 2px solid rgba(255,255,255,0.1); position: relative; z-index: 1; }
+    `;
+  } else if (theme === 'moderno') {
+    pageBg = '#ffffff'; pageText = '#333';
+    extraCss = `
+      body, .a4-page { background: #ffffff !important; color: #333; font-family: 'Inter', sans-serif; }
+      .report-cover { background: #f8fafc; border-bottom: none; position: relative; z-index: 1; }
+      .report-cover-title { color: #1e293b; font-weight: 800; }
+      .report-meta-item { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+      .report-meta-label { color: #3b82f6; }
+      .report-meta-value { color: #1e293b; }
+      .report-section-title { color: #1e293b; border-image: none !important; border-bottom: 3px solid #3b82f6; display: inline-block; padding-bottom: 5px; position: relative; z-index: 1; }
+      .section-number-badge { background: #3b82f6 !important; color: #fff; border-radius: 4px; }
+      .method-step-card, .result-card { background: #fff; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.05); position: relative; z-index: 1; border-radius: 12px; }
+      .method-step-card-title { color: #1e293b; background: #f8fafc !important; border-bottom: 1px solid #e2e8f0; }
+      .result-card-header { background: #f8fafc !important; border-bottom: 1px solid #e2e8f0; }
+      .result-card-title { color: #1e293b; }
+      .result-card-dot { background: #3b82f6; }
+      .report-text, .report-list li, .references-list li { color: #475569; position: relative; z-index: 1; border-bottom-color: #f1f5f9; }
+      .report-footer { background: #f8fafc; border-top: none; position: relative; z-index: 1; }
+    `;
+  } else if (theme === 'belle-epoque') {
+    pageBg = '#fdfaf3'; pageText = '#3a2d24';
+    extraCss = `
+      body, .a4-page { background: #fdfaf3 !important; color: #3a2d24; font-family: 'Playfair Display', serif; }
+      .report-cover { background: #f3efe6; border-bottom: 2px solid #8b6b4a; position: relative; z-index: 1; }
+      .report-cover-title { color: #4a3625; font-weight: 700; text-align: center; }
+      .report-cover-theme { text-align: center; color: #8b6b4a; }
+      .report-meta-item { background: transparent; border: 1px solid #d4cbb8; border-radius: 0; text-align: center; }
+      .report-meta-label { color: #8b6b4a; font-family: 'Playfair Display', serif; }
+      .report-meta-value { color: #4a3625; }
+      .report-section-title { color: #4a3625; border-image: none !important; border-bottom: 1px solid #8b6b4a; position: relative; z-index: 1; text-align: center; justify-content: center; }
+      .section-number-badge { display: none; }
+      .method-step-card, .result-card { background: #fdfaf3; border: 1px solid #d4cbb8; position: relative; z-index: 1; border-radius: 0; border-left: none; }
+      .method-step-card-title { color: #4a3625; background: #f3efe6 !important; text-align: center; }
+      .result-card-header { background: #f3efe6 !important; justify-content: center; }
+      .result-card-title { color: #4a3625; }
+      .result-card-dot { display: none; }
+      .report-text, .report-list li, .references-list li { color: #5c432d; position: relative; z-index: 1; border-bottom-color: #eee9dd; }
+      .report-footer { background: #f3efe6; border-top: 1px solid #d4cbb8; position: relative; z-index: 1; justify-content: center; }
+      .footer-brand { text-align: center; width: 100%; }
+      .footer-line { display: none; }
+    `;
+  } else if (theme === 'clair-obscur') {
+    pageBg = '#0d0c12'; pageText = '#d4cbb8';
+    extraCss = `
+      body, .a4-page { background: #0d0c12 !important; color: #d4cbb8; font-family: 'Playfair Display', serif; }
+      .report-cover { background: #050508; border-bottom: 1px solid #b78f61; position: relative; z-index: 1; }
+      .report-cover-title { color: #e6d8c3; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; }
+      .report-meta-item { background: rgba(183, 143, 97, 0.05); border: 1px solid rgba(183, 143, 97, 0.3); border-radius: 0; }
+      .report-meta-label { color: #b78f61; }
+      .report-meta-value { color: #e6d8c3; }
+      .report-section-title { color: #e6d8c3; border-image: none !important; border-bottom: 1px solid rgba(183, 143, 97, 0.5); position: relative; z-index: 1; }
+      .section-number-badge { background: #b78f61 !important; color: #0d0c12; border-radius: 0; }
+      .method-step-card, .result-card { background: #13111a; border: 1px solid rgba(183, 143, 97, 0.2); position: relative; z-index: 1; border-radius: 0; border-left: 2px solid #b78f61; }
+      .method-step-card-title { color: #e6d8c3; background: rgba(183, 143, 97, 0.1) !important; }
+      .result-card-header { background: rgba(183, 143, 97, 0.15) !important; }
+      .result-card-title { color: #e6d8c3; }
+      .report-text, .report-list li, .references-list li { color: #a39b8a; position: relative; z-index: 1; border-bottom-color: #1a1824; }
+      .report-footer { background: #050508; border-top: 1px solid rgba(183, 143, 97, 0.3); position: relative; z-index: 1; }
+    `;
+  } else if (theme === 'minimalista') {
+    pageBg = '#fafafa'; pageText = '#1a1a1a';
+    extraCss = `
+      body, .a4-page { background: #fafafa !important; color: #1a1a1a; font-family: 'Inter', sans-serif; }
+      .report-cover { background: #fff; border-bottom: 1px solid #eee; position: relative; z-index: 1; padding-bottom: 40px; }
+      .report-cover::before { display: none; }
+      .report-cover-title { color: #000; font-weight: 400; font-size: 2.2rem; }
+      .report-meta-item { background: transparent; border: none; border-bottom: 1px solid #eee; border-radius: 0; padding-left: 0; }
+      .report-meta-label { color: #888; }
+      .report-meta-value { color: #000; }
+      .report-section-title { color: #000; border-image: none !important; border-bottom: none; position: relative; z-index: 1; padding-bottom: 0; margin-bottom: 24px; font-weight: 500; }
+      .section-number-badge { background: #000 !important; color: #fff; border-radius: 50%; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; padding: 0; }
+      .method-step-card, .result-card { background: #fff; border: 1px solid #eaeaea; position: relative; z-index: 1; border-radius: 4px; box-shadow: none; border-left: none; }
+      .method-step-card-title { color: #000; background: transparent !important; border-bottom: 1px solid #eaeaea; }
+      .result-card-header { background: transparent !important; border-bottom: 1px solid #eaeaea; }
+      .result-card-title { color: #000; }
+      .result-card-dot { display: none; }
+      .report-text, .report-list li, .references-list li { color: #444; position: relative; z-index: 1; border-bottom-color: #f5f5f5; }
+      .report-footer { background: #fff; border-top: 1px solid #eee; position: relative; z-index: 1; }
     `;
   }
 
@@ -628,37 +824,5 @@ function showToast(msg, type = 'success') {
 
 // ── INIT ──────────────────────────────────────────────────────────────────
 (function init() {
-  // Pre-fill with the example report
-  document.getElementById('f-title').value = 'Relatório de Aula Prática de Microbiologia';
-  document.getElementById('f-theme').value = 'Normas de Biossegurança, Esterilização de Materiais e Isolamento de Microbiota Nasal';
-  document.getElementById('f-date').value = '11.05.2025';
-  document.getElementById('f-discipline').value = 'Microbiologia Clínica';
-
-  document.getElementById('f-intro').value =
-    'A prática microbiológica exige o cumprimento rigoroso das normas de biossegurança (uso de jaleco, touca, calçado fechado e calças compridas) para prevenir contaminações cruzadas. A fidedignidade dos ensaios depende da esterilização prévia dos materiais, realizada por calor seco (estufa a 150°C/2h) ou úmido (autoclave a 121°C/15min).\n\nO foco clínico desta prática é o estudo da microbiota autóctone e o isolamento de Staphylococcus aureus da mucosa nasal. Cerca de 50% da população mundial atua como "portadora sã" deste patógeno, sem apresentar sintomas. Trata-se de um coco Gram-positivo, piogênico, halotolerante e fortemente produtor da enzima catalase.';
-
-  document.getElementById('f-objectives').value =
-    'Aplicar protocolos de biossegurança e assepsia.\nCompreender os processos de preparo, acondicionamento e esterilização de materiais.\nExecutar a técnica de colheita de exsudato nasal para isolamento da microbiota.\nInocular a amostra assepticamente em meio líquido enriquecido (Caldo BHI).';
-
-  document.getElementById('f-materials').value =
-    'EPIs completos (jaleco, touca, sapatos, calça).\nÁlcool a 70% e álcool iodado.\nPapel craft e papel madeira; fita adesiva e caneta.\nZaragatoa (swab) estéril.\nTubo de ensaio com Caldo BHI (Brain Heart Infusion).\nTesoura esterilizada e bico de Bunsen.\nEstufa de incubação (35°C) e equipamentos de esterilização.';
-
-  addMethodStep('4.1. Processamento e Preparação',
-    'Os materiais foram previamente embalados em papel craft (padrão clínico) ou papel madeira (padrão acadêmico), selados, rotulados e esterilizados. Na bancada, após acomodação dos pertences, realizou-se a desinfecção do espaço e das mãos com álcool 70% e iodado.');
-
-  addMethodStep('4.2. Colheita Nasal',
-    'Com o indivíduo amostrado mantendo a cabeça reclinada, o operador introduziu o swab estéril superficialmente nas narinas (alas e septo) em movimentos circulares. O silêncio foi mantido para evitar contaminação por perdigotos.');
-
-  addMethodStep('4.3. Inoculação Asséptica',
-    'No raio de segurança (20 cm) da chama do bico de Bunsen, o tubo com Caldo BHI foi destapado e sua embocadura flambada. O swab foi inserido, a haste excedente foi cortada com tesoura esterilizada, e o tubo foi novamente flambado e selado.');
-
-  addMethodStep('4.4. Incubação',
-    'O tubo foi rotulado com as iniciais do aluno, a indicação "N" (Nasal) e a data, sendo então incubado na estufa a 35°C por 18 a 24 horas.');
-
-  addResult('Caldo BHI', 'O crescimento microbiano será evidenciado pelo surgimento de turbidez.');
-  addResult('Ágar Manitol Salgado', 'Meio seletivo (alto teor de NaCl) e diferencial. Se houver S. aureus, ele fermentará o manitol, tornando o meio amarelo.');
-  addResult('Prova da Catalase', 'A adição de H₂O₂ gerará efervescência caso o microrganismo possua a enzima, diferenciando Staphylococcus (+) de Streptococcus (-).');
-  addResult('Ágar Sangue', 'Avaliará a produção de hemolisinas, evidenciada pela formação de halos (hemólise) em redor das colônias.');
-
   updatePreview();
 })();
