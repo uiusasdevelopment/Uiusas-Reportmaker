@@ -1,10 +1,10 @@
-// UIUSAS Report Maker — app.js
+﻿// UIUSAS Report Maker â€” app.js
 
 let currentTheme = 'teal';
 let methodStepCount = 0;
 let resultCount = 0;
 
-// ── THEME ──────────────────────────────────────────────────────────────
+// â”€â”€ THEME â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const themeAccents = {
   teal:    { accent: '#0d9488', accent2: '#0891b2' },
   indigo:  { accent: '#4f46e5', accent2: '#7c3aed' },
@@ -53,7 +53,7 @@ document.getElementById('theme-picker').addEventListener('click', e => {
   if (swatch) applyTheme(swatch.dataset.theme);
 });
 
-// ── METHODOLOGY STEPS ──────────────────────────────────────────────────
+// â”€â”€ METHODOLOGY STEPS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function addMethodStep(title = '', body = '') {
   methodStepCount++;
   const id = methodStepCount;
@@ -84,18 +84,18 @@ function addResult(title = '', body = '', base64Img = '') {
   div.className = 'result-item';
   div.innerHTML = `
     <div class="result-item-header">
-      <input type="text" class="result-title" placeholder="Ex: Ágar Manitol Salgado" value="${esc(title)}">
+      <input type="text" class="result-title" placeholder="Ex: Ãgar Manitol Salgado" value="${esc(title)}">
       <button class="btn-remove-step" onclick="removeStep(this,'results-container')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
         </svg>
       </button>
     </div>
-    <textarea class="result-body" rows="2" placeholder="Descreva o resultado ou avaliação esperada...">${esc(body)}</textarea>
+    <textarea class="result-body" rows="2" placeholder="Descreva o resultado ou avaliaÃ§Ã£o esperada...">${esc(body)}</textarea>
     <div class="result-image-uploader" style="margin-top: 8px;">
       <input type="file" accept="image/*" class="result-img-input" style="display:none">
       <input type="hidden" class="result-img-base64" value="${base64Img}">
-      <button class="btn-ghost btn-upload-img" style="font-size: 0.8rem; padding: 4px 8px;">📎 Adicionar Imagem</button>
+      <button class="btn-ghost btn-upload-img" style="font-size: 0.8rem; padding: 4px 8px;">ðŸ“Ž Adicionar Imagem</button>
       <div class="img-preview-box" style="margin-top: 8px; position: relative; display: ${base64Img ? 'inline-block' : 'none'};">
         <img class="img-preview-el" src="${base64Img}" style="max-width: 100%; max-height: 150px; border-radius: 4px; border: 1px solid rgba(150,150,150,0.2);">
         <button class="btn-remove-img" style="position: absolute; top: -8px; right: -8px; background: #dc2626; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; padding: 0;">X</button>
@@ -148,13 +148,13 @@ function removeStep(btn, containerId) {
 document.getElementById('btn-add-step').addEventListener('click', () => addMethodStep());
 document.getElementById('btn-add-result').addEventListener('click', () => addResult());
 
-// ── INPUT LISTENERS ─────────────────────────────────────────────────────
+// â”€â”€ INPUT LISTENERS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 document.querySelectorAll('input[type="text"], textarea').forEach(el => {
   el.addEventListener('input', updatePreview);
 });
 document.getElementById('f-show-brand').addEventListener('change', updatePreview);
 
-// ── COLLECT DATA ─────────────────────────────────────────────────────────
+// â”€â”€ COLLECT DATA â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function collectData() {
   const steps = [];
   document.querySelectorAll('.method-step').forEach(s => {
@@ -210,7 +210,7 @@ function v(id) {
 }
 function esc(s) { return s ? s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : ''; }
 
-// ── BUILD LIST HTML ───────────────────────────────────────────────────────
+// â”€â”€ BUILD LIST HTML â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function buildList(text) {
   if (!text) return '';
   return text.split('\n').filter(l => l.trim()).map(l => `
@@ -225,7 +225,7 @@ function buildRefs(text) {
   `).join('');
 }
 
-// ── UPDATE PREVIEW ────────────────────────────────────────────────────────
+// â”€â”€ UPDATE PREVIEW â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 let previewTimeout;
 function updatePreview() {
   clearTimeout(previewTimeout);
@@ -236,7 +236,7 @@ function updatePreview() {
   }, 150);
 }
 
-// ── RENDER PAGINATED ──────────────────────────────────────────────────────
+// â”€â”€ RENDER PAGINATED â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function renderPaginated(d) {
   const { accent, accent2 } = themeAccents[d.colorTheme] || themeAccents.teal;
   const isNier = d.colorTheme === 'nier';
@@ -248,12 +248,12 @@ function renderPaginated(d) {
   const studentLabel = studentLines.length > 1 ? 'Alunos' : 'Aluno(a)';
 
   const metaItems = [
-    { label: 'Data da Prática', value: esc(d.date) },
+    { label: 'Data da PrÃ¡tica', value: esc(d.date) },
     { label: 'Disciplina', value: esc(d.discipline) },
     { label: studentLabel, value: studentVal, isRaw: true },
     { label: 'Professor(a)', value: esc(d.professor) },
-    { label: 'Instituição', value: esc(d.institution) },
-    { label: 'Turma / Período', value: esc(d.classGroup) },
+    { label: 'InstituiÃ§Ã£o', value: esc(d.institution) },
+    { label: 'Turma / PerÃ­odo', value: esc(d.classGroup) },
   ].filter(m => m.value);
 
   const metaHtml = metaItems.map(m => `
@@ -271,8 +271,8 @@ function renderPaginated(d) {
 
   blocks.push(`
   <div class="report-cover">
-    <div class="report-badge">📋 ${esc(d.docType || 'RELATÓRIO DE AULA PRÁTICA')}</div>
-    <h1 class="report-cover-title">${esc(d.title || 'Relatório de Laboratório')}</h1>
+    <div class="report-badge">ðŸ“‹ ${esc(d.docType || 'RELATÃ“RIO DE AULA PRÃTICA')}</div>
+    <h1 class="report-cover-title">${esc(d.title || 'RelatÃ³rio de LaboratÃ³rio')}</h1>
     ${d.theme ? `<p class="report-cover-theme">Tema: ${esc(d.theme)}</p>` : ''}
     ${metaHtml ? `<div class="report-meta-grid">${metaHtml}</div>` : ''}
   </div>`);
@@ -284,7 +284,7 @@ function renderPaginated(d) {
   `;
 
   if (d.intro) {
-    blocks.push(sectionTitle('1', d.introTitle || 'Introdução'));
+    blocks.push(sectionTitle('1', d.introTitle || 'IntroduÃ§Ã£o'));
     d.intro.split('\n\n').forEach(p => {
       if(p.trim()) blocks.push(`<p class="report-text" style="margin-bottom: 12px;">${esc(p)}</p>`);
     });
@@ -314,7 +314,7 @@ function renderPaginated(d) {
   }
 
   if (d.results && d.results.length > 0) {
-    blocks.push(sectionTitle('5', d.resTitle || 'Resultados / Avaliações'));
+    blocks.push(sectionTitle('5', d.resTitle || 'Resultados / AvaliaÃ§Ãµes'));
     d.results.forEach(r => {
       if(r.title || r.body || r.image) {
         blocks.push(`
@@ -331,21 +331,21 @@ function renderPaginated(d) {
   }
 
   if (d.discussion) {
-    blocks.push(sectionTitle('6', d.discTitle || 'Discussão'));
+    blocks.push(sectionTitle('6', d.discTitle || 'DiscussÃ£o'));
     d.discussion.split('\n\n').forEach(p => {
       if(p.trim()) blocks.push(`<p class="report-text" style="margin-bottom: 12px;">${esc(p)}</p>`);
     });
   }
 
   if (d.conclusion) {
-    blocks.push(sectionTitle('7', d.concTitle || 'Conclusão'));
+    blocks.push(sectionTitle('7', d.concTitle || 'ConclusÃ£o'));
     d.conclusion.split('\n\n').forEach(p => {
       if(p.trim()) blocks.push(`<p class="report-text" style="margin-bottom: 12px;">${esc(p)}</p>`);
     });
   }
 
   if (d.references) {
-    blocks.push(sectionTitle('8', d.refTitle || 'Referências Bibliográficas'));
+    blocks.push(sectionTitle('8', d.refTitle || 'ReferÃªncias BibliogrÃ¡ficas'));
     blocks.push(`<ul class="references-list" style="margin-bottom: 24px;">${buildRefs(d.references)}</ul>`);
   }
 
@@ -872,7 +872,7 @@ function renderPaginated(d) {
   const measureBox = document.getElementById('measure-box');
   measureBox.style.padding = '0'; // removemos o padding para que a .a4-page ocupe 100%
   
-  // Criamos um container temporário para não sujar o measureBox enquanto lemos os elementos
+  // Criamos um container temporÃ¡rio para nÃ£o sujar o measureBox enquanto lemos os elementos
   const tempDiv = document.createElement('div');
   tempDiv.innerHTML = blocks.join('');
   const children = Array.from(tempDiv.children);
@@ -892,7 +892,7 @@ function renderPaginated(d) {
     // Footer
     const footerHtml = showBrand ? `
       <div class="report-footer" style="background: transparent; padding: 16px 48px; display: flex; align-items: center; justify-content: space-between; position: absolute; bottom: 0; left: 0; right: 0; border-top: 1px solid rgba(150,150,150,0.2);">
-        <div class="footer-brand" style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #9ca3af; letter-spacing: 0.1em;">Formatado por <span>UIUSAS</span> Report Maker · ${dateStr}</div>
+        <div class="footer-brand" style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #9ca3af; letter-spacing: 0.1em;">Formatado por <span>UIUSAS</span> Report Maker Â· ${dateStr}</div>
         <div class="footer-line"></div>
       </div>` : `
       <div class="report-footer" style="background: transparent; padding: 16px 48px; display: flex; align-items: center; justify-content: flex-end; position: absolute; bottom: 0; left: 0; right: 0; border-top: 1px solid rgba(150,150,150,0.2);">
@@ -914,11 +914,11 @@ function renderPaginated(d) {
     let maxH = contentArea.clientHeight;
     if (maxH < 500) maxH = 1122; // Fallback se o navegador falhar no layout escondido
     
-    // Se o conteúdo ultrapassar a altura máxima
+    // Se o conteÃºdo ultrapassar a altura mÃ¡xima
     if (contentArea.scrollHeight > maxH) {
       contentArea.removeChild(el); // Too big for this page
       
-      // Verifica se o elemento anterior que ficou no final da página é um subtítulo "órfão"
+      // Verifica se o elemento anterior que ficou no final da pÃ¡gina Ã© um subtÃ­tulo "Ã³rfÃ£o"
       let orphanTitle = null;
       if (contentArea.lastElementChild && contentArea.lastElementChild.classList.contains('report-section-title')) {
         orphanTitle = contentArea.lastElementChild;
@@ -929,7 +929,7 @@ function renderPaginated(d) {
       measureBox.appendChild(currentPage);
       contentArea = currentPage.querySelector('.page-content');
       
-      // Se tinha um título órfão, joga ele no topo da página nova primeiro
+      // Se tinha um tÃ­tulo Ã³rfÃ£o, joga ele no topo da pÃ¡gina nova primeiro
       if (orphanTitle) {
         contentArea.appendChild(orphanTitle);
       }
@@ -938,7 +938,7 @@ function renderPaginated(d) {
     }
   }
 
-  // Depois de montar tudo no measureBox (que é sempre renderizado), passamos pro output final
+  // Depois de montar tudo no measureBox (que Ã© sempre renderizado), passamos pro output final
   const output = document.getElementById('report-output');
   output.innerHTML = '';
   while (measureBox.firstChild) {
@@ -954,11 +954,11 @@ function hexToRgb(hex) {
 }
 
 
-// ── EXPORT PDF ────────────────────────────────────────────────────────────
+// â”€â”€ EXPORT PDF â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 document.getElementById('btn-export').addEventListener('click', () => {
-  const title = document.getElementById('f-title').value.trim() || 'Relatório de Laboratório';
+  const title = document.getElementById('f-title').value.trim() || 'RelatÃ³rio de LaboratÃ³rio';
   
-  // Pegamos o HTML já paginado na tela!
+  // Pegamos o HTML jÃ¡ paginado na tela!
   const reportHtml = document.getElementById('report-output').innerHTML;
   const styleHtml = document.getElementById('dynamic-theme') ? document.getElementById('dynamic-theme').innerHTML : '';
 
@@ -1006,10 +1006,10 @@ window.onload = function() {
 </body>
 </html>`);
   win.document.close();
-  showToast('✅ Janela de impressão aberta — escolha "Salvar como PDF"!', 'success');
+  showToast('âœ… Janela de impressÃ£o aberta â€” escolha "Salvar como PDF"!', 'success');
 });
 
-// ── SAVE JSON ─────────────────────────────────────────────────────────────
+// â”€â”€ SAVE JSON â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 document.getElementById('btn-save').addEventListener('click', () => {
   const data = collectData();
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -1019,10 +1019,10 @@ document.getElementById('btn-save').addEventListener('click', () => {
   a.download = `relatorio_${Date.now()}.json`;
   a.click();
   URL.revokeObjectURL(url);
-  showToast('💾 Relatório salvo como JSON!', 'success');
+  showToast('ðŸ’¾ RelatÃ³rio salvo como JSON!', 'success');
 });
 
-// ── LOAD JSON ─────────────────────────────────────────────────────────────
+// â”€â”€ LOAD JSON â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 document.getElementById('btn-load').addEventListener('click', () => {
   document.getElementById('file-input').click();
 });
@@ -1035,9 +1035,9 @@ document.getElementById('file-input').addEventListener('change', e => {
     try {
       const data = JSON.parse(ev.target.result);
       loadData(data);
-      showToast('📂 Relatório carregado com sucesso!', 'success');
+      showToast('ðŸ“‚ RelatÃ³rio carregado com sucesso!', 'success');
     } catch {
-      showToast('❌ Arquivo inválido.', 'error');
+      showToast('âŒ Arquivo invÃ¡lido.', 'error');
     }
   };
   reader.readAsText(file);
@@ -1076,13 +1076,13 @@ function loadData(d) {
   else updatePreview();
 }
 
-// ── PREVIEW TOGGLE (mobile) ───────────────────────────────────────────────
+// â”€â”€ PREVIEW TOGGLE (mobile) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 document.getElementById('btn-preview').addEventListener('click', () => {
   document.getElementById('editor-panel').style.display =
     document.getElementById('editor-panel').style.display === 'none' ? '' : 'none';
 });
 
-// ── TOAST ─────────────────────────────────────────────────────────────────
+// â”€â”€ TOAST â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function showToast(msg, type = 'success') {
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -1091,7 +1091,7 @@ function showToast(msg, type = 'success') {
   t._timer = setTimeout(() => { t.className = ''; }, 3500);
 }
 
-// ── INIT ──────────────────────────────────────────────────────────────────
+// â”€â”€ INIT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 (function init() {
   updatePreview();
 })();
