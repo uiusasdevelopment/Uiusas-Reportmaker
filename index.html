@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UIUSAS Report Maker</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
 <div id="app">
@@ -24,7 +24,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
         Carregar
       </button>
-      <button id="btn-save" class="btn btn-ghost" title="Salvar como JSON">
+      <button id="btn-save" class="btn btn-ghost" title="Salvar JSON">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
         Salvar
       </button>
@@ -51,47 +51,48 @@
           </div>
           <div class="field-group">
             <label>Tipo de Documento</label>
-            <input type="text" id="docType" placeholder="RELATÓRIO DE AULA PRÁTICA" value="RELATÓRIO DE AULA PRÁTICA">
+            <input type="text" id="f-doc-type" value="RELATÓRIO DE AULA PRÁTICA" placeholder="Ex: RELATÓRIO DE AULA PRÁTICA">
           </div>
           <div class="field-group">
             <label>Título do Relatório</label>
-            <input type="text" id="reportTitle" placeholder="Ex: Relatório de Aula Prática de Microbiologia">
+            <input type="text" id="f-title" placeholder="Ex: Relatório de Aula Prática de Microbiologia">
           </div>
           <div class="field-group">
             <label>Tema / Subtítulo</label>
-            <input type="text" id="reportSubtitle" placeholder="Ex: Normas de Biossegurança e Isolamento de Microbiota Nasal">
+            <input type="text" id="f-theme" placeholder="Ex: Normas de Biossegurança e Isolamento de Microbiota Nasal">
           </div>
-          <div class="split-fields">
+          <div class="field-row">
             <div class="field-group">
               <label>Data da Prática</label>
-              <input type="text" id="practiceDate" placeholder="Ex: 11.05.2025">
+              <input type="text" id="f-date" placeholder="Ex: 11.05.2025">
             </div>
             <div class="field-group">
               <label>Disciplina / Curso</label>
-              <input type="text" id="courseName" placeholder="Ex: Microbiologia Clínica">
+              <input type="text" id="f-discipline" placeholder="Ex: Microbiologia Clínica">
             </div>
           </div>
           <div class="field-group">
-            <label>Aluno(s) <span>(um por linha)</span></label>
-            <textarea id="studentsList" rows="3" placeholder="Ex: Nome do Aluno 1&#10;Nome do Aluno 2"></textarea>
+            <label>Aluno(s) <small>(um por linha)</small></label>
+            <textarea id="f-student" rows="2" placeholder="Ex: Nome do Aluno 1&#10;Nome do Aluno 2"></textarea>
           </div>
-          <div class="split-fields">
+          <div class="field-row">
             <div class="field-group">
               <label>Professor(a)</label>
-              <input type="text" id="professorName" placeholder="Nome do(a) professor(a)">
+              <input type="text" id="f-professor" placeholder="Nome do(a) professor(a)">
             </div>
+          <div class="field-row">
             <div class="field-group">
               <label>Instituição</label>
-              <input type="text" id="institutionName" placeholder="Nome da instituição">
+              <input type="text" id="f-institution" placeholder="Nome da instituição">
             </div>
             <div class="field-group">
               <label>Turma / Período</label>
-              <input type="text" id="className" placeholder="Ex: Turma B — 3º P">
+              <input type="text" id="f-class" placeholder="Ex: Turma B — 3º Período">
             </div>
           </div>
         </section>
 
-        <!-- INTRO -->
+        <!-- INTRODUCTION -->
         <section class="editor-section">
           <div class="section-header">
             <span class="section-num">02</span>
@@ -99,11 +100,11 @@
           </div>
           <div class="field-group">
             <label>Título da Seção</label>
-            <input type="text" id="introTitle" value="Introdução">
+            <input type="text" id="f-intro-title" value="Introdução">
           </div>
           <div class="field-group">
             <label>Texto de Introdução</label>
-            <textarea id="introText" rows="6" placeholder="Descreva o contexto teórico, fundamentação e relevância da prática..."></textarea>
+            <textarea id="f-intro" rows="7" placeholder="Descreva o contexto teórico, fundamentação e relevância da prática..."></textarea>
           </div>
         </section>
 
@@ -115,238 +116,31 @@
           </div>
           <div class="field-group">
             <label>Título da Seção</label>
-            <input type="text" id="objTitle" value="Objetivos">
+            <input type="text" id="f-obj-title" value="Objetivos">
           </div>
           <div class="field-group">
-            <label>Lista de Objetivos <span>(um por linha)</span></label>
-            <textarea id="objList" rows="5" placeholder="Aplicar protocolos de biossegurança e assepsia.&#10;Compreender os processos de esterilização.&#10;Executar a técnica de colheita de exsudato nasal."></textarea>
+            <label>Lista de Objetivos <small>(um por linha)</small></label>
+            <textarea id="f-objectives" rows="5" placeholder="Aplicar protocolos de biossegurança e assepsia.&#10;Compreender os processos de esterilização.&#10;Executar a técnica de colheita de exsudato nasal."></textarea>
           </div>
         </section>
 
-        <!-- MATERIALS AND METHODS -->
+        <!-- MATERIALS -->
         <section class="editor-section">
           <div class="section-header">
             <span class="section-num">04</span>
-            <h2>3. Materiais e Métodos</h2>
+            <h2>3. Seção de Materiais</h2>
           </div>
           <div class="field-group">
             <label>Título da Seção</label>
-            <input type="text" id="methTitle" value="Materiais e Métodos">
+            <input type="text" id="f-mat-title" value="Materiais e Equipamentos">
           </div>
-          
-          <div class="subsection">
-            <h3>Lista de Materiais</h3>
-            <div class="field-group">
-              <label>Materiais Utilizados <span>(um por linha)</span></label>
-              <textarea id="materialsList" rows="4" placeholder="Zaragatoa estéril&#10;Placa de Petri com Ágar Manitol Salgado&#10;Estufa bacteriológica (37°C)"></textarea>
-            </div>
-          </div>
-
-          <div class="subsection">
-            <div class="flex-between">
-              <h3>Passo a Passo (Método)</h3>
-              <button class="btn btn-ghost btn-sm" onclick="addMethodStep()">+ Adicionar Passo</button>
-            </div>
-            <div id="method-steps-container"></div>
+          <div class="field-group">
+            <label>Lista de Materiais <small>(um por linha)</small></label>
+            <textarea id="f-materials" rows="6" placeholder="EPIs completos (jaleco, touca, sapatos, calça).&#10;Álcool a 70% e álcool iodado.&#10;Zaragatoa (swab) estéril.&#10;Tubo de ensaio com Caldo BHI."></textarea>
           </div>
         </section>
 
-        <!-- RESULTS AND DISCUSSION -->
-        <section class="editor-section">
-          <div class="section-header">
-            <span class="section-num">05</span>
-            <h2>4. Seção de Metodologia</h2>
-          </div>
-          <div class="field-group">
-            <label>Título da Seção</label>
-            <input type="text" id="f-meth-title" value="Metodologia">
-          </div>
-          <div id="method-steps-container">
-            <!-- steps added dynamically -->
-          </div>
-          <button class="btn-add-step" id="btn-add-step">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-            Adicionar Etapa
-          </button>
-        </section>
-
-        <!-- RESULTS / EVALUATIONS -->
-        <section class="editor-section">
-          <div class="section-header">
-            <span class="section-num">06</span>
-            <h2>5. Seção de Resultados</h2>
-          </div>
-          <div class="field-group">
-            <label>Título da Seção</label>
-            <input type="text" id="f-res-title" value="Resultados Esperados / Avaliações">
-          </div>
-          <div id="results-container">
-            <!-- results added dynamically -->
-          </div>
-          <button class="btn-add-step" id="btn-add-result">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-            Adicionar Resultado/Avaliação
-          </button>
-        </section>
-
-        <!-- DISCUSSION & CONCLUSION -->
-        <section class="editor-section">
-          <div class="section-header">
-            <span class="section-num">07</span>
-            <h2>6. Seção de Discussão</h2>
-          </div>
-          <div class="field-group">
-            <label>Título da Seção</label>
-            <input type="text" id="f-disc-title" value="Discussão">
-          </div>
-          <div class="field-group">
-            <label>Texto de Discussão</label>
-            <textarea id="f-discussion" rows="5" placeholder="Analise criticamente os resultados, compare com a literatura, discuta limitações..."></textarea>
-          </div>
-        </section>
-
-        <section class="editor-section">
-          <div class="section-header">
-            <span class="section-num">08</span>
-            <h2>7. Seção de Conclusão</h2>
-          </div>
-          <div class="field-group">
-            <label>Título da Seção</label>
-            <input type="text" id="f-conc-title" value="Conclusão">
-          </div>
-          <div class="field-group">
-            <label>Texto de Conclusão</label>
-            <textarea id="f-conclusion" rows="4" placeholder="Sintetize os principais achados e o cumprimento dos objetivos..."></textarea>
-          </div>
-        </section>
-
-        <!-- REFERENCES -->
-        <section class="editor-section">
-          <div class="section-header">
-            <span class="section-num">09</span>
-            <h2>8. Seção de Referências</h2>
-          </div>
-          <div class="field-group">
-            <label>Título da Seção</label>
-            <input type="text" id="f-ref-title" value="Referências Bibliográficas">
-          </div>
-          <div class="field-group">
-            <label>Referências <small>(uma por linha, formato ABNT)</small></label>
-            <textarea id="f-references" rows="5" placeholder="MURRAY, P. R. et al. Microbiologia Médica. 7. ed. Rio de Janeiro: Elsevier, 2014."></textarea>
-          </div>
-        </section>
-
-        <!-- THEME E OPÇÕES -->
-        <section class="editor-section">
-          <div class="section-header">
-            <span class="section-num">10</span>
-            <h2>Aparência e Opções</h2>
-          </div>
-          <div class="field-group">
-            <label>Tema do Relatório</label>
-            <div class="theme-picker" id="theme-picker">
-              <div class="theme-swatch active" data-theme="teal" style="background: linear-gradient(135deg, #0d9488, #0891b2)" title="Teal Science"></div>
-              <div class="theme-swatch" data-theme="indigo" style="background: linear-gradient(135deg, #4f46e5, #7c3aed)" title="Indigo Lab"></div>
-              <div class="theme-swatch" data-theme="crimson" style="background: linear-gradient(135deg, #dc2626, #b91c1c)" title="Crimson Med"></div>
-              <div class="theme-swatch" data-theme="amber" style="background: linear-gradient(135deg, #d97706, #b45309)" title="Amber Research"></div>
-              <div class="theme-swatch" data-theme="emerald" style="background: linear-gradient(135deg, #059669, #047857)" title="Emerald Bio"></div>
-              <div class="theme-swatch" data-theme="slate" style="background: linear-gradient(135deg, #475569, #334155)" title="Slate Classic"></div>
-              <div class="theme-swatch" data-theme="caderno" style="background: #faf8f5; border: 1px solid #d4cbb8;" title="Caderno Histológico"></div>
-              <div class="theme-swatch" data-theme="moderno" style="background: #ffffff; border: 1px solid #3b82f6;" title="Moderno"></div>
-              <div class="theme-swatch" data-theme="belle-epoque" style="background: #fdfaf3; border: 1px solid #b89876;" title="Belle Époque"></div>
-              <div class="theme-swatch" data-theme="cyberpunk" style="background: #09090b; border: 1px solid #00f0ff;" title="Cyberpunk"></div>
-              <div class="theme-swatch" data-theme="minimalista" style="background: #fafafa; border: 1px solid #1a1a1a;" title="Minimalista"></div>
-              <div class="theme-swatch" data-theme="resident-evil" style="background: #111111; border: 1px dashed rgba(255,255,255,0.3);" title="Resident Evil (Requiem)"></div>
-              <div class="theme-swatch" data-theme="clair-obscur" style="background: #0d0c12; border: 1px solid #b78f61;" title="Clair Obscur (Exp 33)"></div>
-              <div class="theme-swatch" data-theme="pokemon" style="background: #0a1118; border: 1px solid #00ffaa;" title="Jogos: Pokémon ZA"></div>
-              <div class="theme-swatch" data-theme="pokemon-sword" style="background: #05141c; border: 1px solid #e03a5f;" title="Jogos: Pokémon Sword"></div>
-              <div class="theme-swatch" data-theme="pokedex" style="background: #e63946; border: 1px solid #f1faee;" title="Pokédex Kanto"></div>
-              <div class="theme-swatch" data-theme="silksong" style="background: #120b12; border: 1px solid #dbb258;" title="Hollow Knight: Silksong"></div>
-              <div class="theme-swatch" data-theme="hexatombe" style="background: #0c0c0c; border: 1px solid #ff2a2a;" title="Ordem Paranormal: Hexatombe"></div>
-              <div class="theme-swatch" data-theme="sinais" style="background: #010503; border: 1px solid #00ffaa;" title="Sinais do Outro Lado"></div>
-              <div class="theme-swatch" data-theme="nier" style="background: #dad4bb; border: 1px solid #4a4a4a;" title="YoRHa (NieR)"></div>
-              <div class="theme-swatch" data-theme="vintage-med" style="background: #f5f0e6; border: 1px solid #c0392b;" title="Prontuário Clínico Vintage"></div>
-              <div class="theme-swatch" data-theme="netter" style="background: #f9f6f0; border: 1px solid #8b6b4a;" title="Atlas Clássico (Netter)"></div>
-              <div class="theme-swatch" data-theme="hitech" style="background: #0a1128; border: 1px solid #00f0ff;" title="Laboratório Hi-Tech"></div>
-              <div class="theme-swatch" data-theme="pipboy" style="background: #051405; border: 1px solid #4aff4a;" title="Pip-Boy (Fallout)"></div>
-              <div class="theme-swatch" data-theme="bloodborne" style="background: #1a1515; border: 1px solid #8b0000;" title="Gothic / Bloodborne"></div>
-              <div class="theme-swatch" data-theme="tlou" style="background: #2a2d24; border: 1px solid #d4e09b;" title="The Last of Us / Cordyceps"></div>
-              <div class="theme-swatch" data-theme="genshin" style="background: #faf5eb; border: 1px solid #d4a351;" title="Genshin Impact"></div>
-              <div class="theme-swatch" data-theme="grimorio" style="background: #4a3b2c; border: 1px solid #f4c430;" title="Grimório de Alquimia"></div>
-              <div class="theme-swatch" data-theme="taverna" style="background: #5c4033; border: 1px solid #b8860b;" title="Taverna Medieval"></div>
-              <div class="theme-swatch" data-theme="vaporwave" style="background: #2a0845; border: 1px solid #00ffff;" title="Vaporwave / Synthwave"></div>
-              <div class="theme-swatch" data-theme="steampunk" style="background: #8b5a2b; border: 1px solid #cd853f;" title="Steampunk"></div>
-            </div>
-          </div>
-          <div class="field-group" style="margin-top: 20px; display: flex; align-items: center; gap: 8px;">
-            <input type="checkbox" id="f-show-brand" checked style="width: auto; margin: 0;">
-            <label for="f-show-brand" style="margin: 0; text-transform: none; letter-spacing: normal;">Mostrar marca UIUSAS no rodapé</label>
-          </div>
-        </section>
-
-      </div><!-- end panel-scroll -->
-    </aside>
-
-    <!-- PREVIEW PANEL -->
-    <main id="preview-panel">
-      <div id="preview-container">
-        <div id="report-output">
-          <!-- Generated report goes here -->
-        </div>
-      </div>
-    </main>
-
-  </div><!-- end layout -->
-</div><!-- end app -->
-
-<!-- MEASURE BOX (Hidden, used to measure height of elements for pagination) -->
-<div id="measure-box" style="visibility: hidden; position: absolute; top: 0; left: -9999px; width: 210mm; display: block; padding: 0; margin: 0;"></div>
-
-<!-- HIDDEN FILE INPUT -->
-<input type="file" id="file-input" accept=".json" style="display:none">
-
-<!-- TOAST -->
-<div id="toast"></div>
-          </div>
-          <div class="field-group">
-            <label>Título da Seção</label>
-            <input type="text" id="objTitle" value="Objetivos">
-          </div>
-          <div class="field-group">
-            <label>Lista de Objetivos <span>(um por linha)</span></label>
-            <textarea id="objList" rows="5" placeholder="Aplicar protocolos de biossegurança e assepsia.&#10;Compreender os processos de esterilização.&#10;Executar a técnica de colheita de exsudato nasal."></textarea>
-          </div>
-        </section>
-
-        <!-- MATERIALS AND METHODS -->
-        <section class="editor-section">
-          <div class="section-header">
-            <span class="section-num">04</span>
-            <h2>3. Materiais e Métodos</h2>
-          </div>
-          <div class="field-group">
-            <label>Título da Seção</label>
-            <input type="text" id="methTitle" value="Materiais e Métodos">
-          </div>
-          
-          <div class="subsection">
-            <h3>Lista de Materiais</h3>
-            <div class="field-group">
-              <label>Materiais Utilizados <span>(um por linha)</span></label>
-              <textarea id="materialsList" rows="4" placeholder="Zaragatoa estéril&#10;Placa de Petri com Ágar Manitol Salgado&#10;Estufa bacteriológica (37°C)"></textarea>
-            </div>
-          </div>
-
-          <div class="subsection">
-            <div class="flex-between">
-              <h3>Passo a Passo (Método)</h3>
-              <button class="btn btn-ghost btn-sm" onclick="addMethodStep()">+ Adicionar Passo</button>
-            </div>
-            <div id="method-steps-container"></div>
-          </div>
-        </section>
-
-        <!-- RESULTS AND DISCUSSION -->
+        <!-- METHODOLOGY -->
         <section class="editor-section">
           <div class="section-header">
             <span class="section-num">05</span>
@@ -507,6 +301,6 @@
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="32" height="32"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
 </button>
 
-<script src="app.js?v=5" charset="UTF-8"></script>
+<script src="app.js?v=6" charset="UTF-8"></script>
 </body>
 </html>
