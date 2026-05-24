@@ -1092,3 +1092,14 @@ function showToast(msg, type = 'success') {
 (function init() {
   updatePreview();
 })();
+
+function applyPreviewScale() {
+  const previewPanel = document.getElementById('preview-panel');
+  if (!previewPanel) return;
+  const width = previewPanel.clientWidth;
+  if (width === 0) return;
+  const scale = width < 834 ? (width - 20) / 794 : 1;
+  document.documentElement.style.setProperty('--preview-scale', scale);
+}
+window.addEventListener('resize', applyPreviewScale);
+
