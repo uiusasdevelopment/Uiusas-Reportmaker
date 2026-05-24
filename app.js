@@ -232,6 +232,7 @@ function updatePreview() {
   previewTimeout = setTimeout(() => {
     const data = collectData();
     renderPaginated(data);
+    applyPreviewScale();
   }, 150);
 }
 

@@ -322,12 +322,16 @@ input::placeholder, textarea::placeholder { color: var(--text-muted); opacity: 0
   background: var(--page-bg, #ffffff);
   color: var(--page-text, #1a1a2a);
   box-shadow: var(--shadow-lg), 0 0 60px rgba(13,148,136,0.08);
+  margin-bottom: 24px;
   position: relative;
+  transform: scale(var(--preview-scale, 1));
+  transform-origin: top center;
   overflow: hidden;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
 }
+
 
 .page-content {
   height: 100%;
@@ -592,9 +596,9 @@ input::placeholder, textarea::placeholder { color: var(--text-muted); opacity: 0
 
 /* ---- RESPONSIVE ---- */
 @media (max-width: 900px) {
-  #layout { grid-template-columns: 1fr; }
-  #editor-panel { height: 50vh; }
-  #preview-panel { height: 50vh; }
+  #layout { grid-template-columns: 1fr; display: flex; flex-direction: column; }
+  #editor-panel { height: calc(100vh - var(--header-h)); display: block; flex-shrink: 0; }
+  #preview-panel { height: calc(100vh - var(--header-h)); display: none; padding-bottom: 120px; flex-shrink: 0; }
   .report-cover-title { font-size: 1.4rem; }
   .report-body { padding: 28px 24px; }
   .report-cover { padding: 36px 24px 28px; }
