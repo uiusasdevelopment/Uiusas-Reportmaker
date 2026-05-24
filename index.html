@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UIUSAS Report Maker</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=2">
+<link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
 <div id="app">
@@ -24,7 +24,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
         Carregar
       </button>
-      <button id="btn-save" class="btn btn-ghost" title="Salvar JSON">
+      <button id="btn-save" class="btn btn-ghost" title="Salvar como JSON">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
         Salvar
       </button>
@@ -51,48 +51,47 @@
           </div>
           <div class="field-group">
             <label>Tipo de Documento</label>
-            <input type="text" id="f-doc-type" value="RELATÓRIO DE AULA PRÁTICA" placeholder="Ex: RELATÓRIO DE AULA PRÁTICA">
+            <input type="text" id="docType" placeholder="RELATÓRIO DE AULA PRÁTICA" value="RELATÓRIO DE AULA PRÁTICA">
           </div>
           <div class="field-group">
             <label>Título do Relatório</label>
-            <input type="text" id="f-title" placeholder="Ex: Relatório de Aula Prática de Microbiologia">
+            <input type="text" id="reportTitle" placeholder="Ex: Relatório de Aula Prática de Microbiologia">
           </div>
           <div class="field-group">
             <label>Tema / Subtítulo</label>
-            <input type="text" id="f-theme" placeholder="Ex: Normas de Biossegurança e Isolamento de Microbiota Nasal">
+            <input type="text" id="reportSubtitle" placeholder="Ex: Normas de Biossegurança e Isolamento de Microbiota Nasal">
           </div>
-          <div class="field-row">
+          <div class="split-fields">
             <div class="field-group">
               <label>Data da Prática</label>
-              <input type="text" id="f-date" placeholder="Ex: 11.05.2025">
+              <input type="text" id="practiceDate" placeholder="Ex: 11.05.2025">
             </div>
             <div class="field-group">
               <label>Disciplina / Curso</label>
-              <input type="text" id="f-discipline" placeholder="Ex: Microbiologia Clínica">
+              <input type="text" id="courseName" placeholder="Ex: Microbiologia Clínica">
             </div>
           </div>
           <div class="field-group">
-            <label>Aluno(s) <small>(um por linha)</small></label>
-            <textarea id="f-student" rows="2" placeholder="Ex: Nome do Aluno 1&#10;Nome do Aluno 2"></textarea>
+            <label>Aluno(s) <span>(um por linha)</span></label>
+            <textarea id="studentsList" rows="3" placeholder="Ex: Nome do Aluno 1&#10;Nome do Aluno 2"></textarea>
           </div>
-          <div class="field-row">
+          <div class="split-fields">
             <div class="field-group">
               <label>Professor(a)</label>
-              <input type="text" id="f-professor" placeholder="Nome do(a) professor(a)">
+              <input type="text" id="professorName" placeholder="Nome do(a) professor(a)">
             </div>
-          <div class="field-row">
             <div class="field-group">
               <label>Instituição</label>
-              <input type="text" id="f-institution" placeholder="Nome da instituição">
+              <input type="text" id="institutionName" placeholder="Nome da instituição">
             </div>
             <div class="field-group">
               <label>Turma / Período</label>
-              <input type="text" id="f-class" placeholder="Ex: Turma B — 3º Período">
+              <input type="text" id="className" placeholder="Ex: Turma B — 3º P">
             </div>
           </div>
         </section>
 
-        <!-- INTRODUCTION -->
+        <!-- INTRO -->
         <section class="editor-section">
           <div class="section-header">
             <span class="section-num">02</span>
@@ -100,11 +99,11 @@
           </div>
           <div class="field-group">
             <label>Título da Seção</label>
-            <input type="text" id="f-intro-title" value="Introdução">
+            <input type="text" id="introTitle" value="Introdução">
           </div>
           <div class="field-group">
             <label>Texto de Introdução</label>
-            <textarea id="f-intro" rows="7" placeholder="Descreva o contexto teórico, fundamentação e relevância da prática..."></textarea>
+            <textarea id="introText" rows="6" placeholder="Descreva o contexto teórico, fundamentação e relevância da prática..."></textarea>
           </div>
         </section>
 
@@ -116,31 +115,43 @@
           </div>
           <div class="field-group">
             <label>Título da Seção</label>
-            <input type="text" id="f-obj-title" value="Objetivos">
+            <input type="text" id="objTitle" value="Objetivos">
           </div>
           <div class="field-group">
-            <label>Lista de Objetivos <small>(um por linha)</small></label>
-            <textarea id="f-objectives" rows="5" placeholder="Aplicar protocolos de biossegurança e assepsia.&#10;Compreender os processos de esterilização.&#10;Executar a técnica de colheita de exsudato nasal."></textarea>
+            <label>Lista de Objetivos <span>(um por linha)</span></label>
+            <textarea id="objList" rows="5" placeholder="Aplicar protocolos de biossegurança e assepsia.&#10;Compreender os processos de esterilização.&#10;Executar a técnica de colheita de exsudato nasal."></textarea>
           </div>
         </section>
 
-        <!-- MATERIALS -->
+        <!-- MATERIALS AND METHODS -->
         <section class="editor-section">
           <div class="section-header">
             <span class="section-num">04</span>
-            <h2>3. Seção de Materiais</h2>
+            <h2>3. Materiais e Métodos</h2>
           </div>
           <div class="field-group">
             <label>Título da Seção</label>
-            <input type="text" id="f-mat-title" value="Materiais e Equipamentos">
+            <input type="text" id="methTitle" value="Materiais e Métodos">
           </div>
-          <div class="field-group">
-            <label>Lista de Materiais <small>(um por linha)</small></label>
-            <textarea id="f-materials" rows="6" placeholder="EPIs completos (jaleco, touca, sapatos, calça).&#10;Álcool a 70% e álcool iodado.&#10;Zaragatoa (swab) estéril.&#10;Tubo de ensaio com Caldo BHI."></textarea>
+          
+          <div class="subsection">
+            <h3>Lista de Materiais</h3>
+            <div class="field-group">
+              <label>Materiais Utilizados <span>(um por linha)</span></label>
+              <textarea id="materialsList" rows="4" placeholder="Zaragatoa estéril&#10;Placa de Petri com Ágar Manitol Salgado&#10;Estufa bacteriológica (37°C)"></textarea>
+            </div>
+          </div>
+
+          <div class="subsection">
+            <div class="flex-between">
+              <h3>Passo a Passo (Método)</h3>
+              <button class="btn btn-ghost btn-sm" onclick="addMethodStep()">+ Adicionar Passo</button>
+            </div>
+            <div id="method-steps-container"></div>
           </div>
         </section>
 
-        <!-- METHODOLOGY -->
+        <!-- RESULTS AND DISCUSSION -->
         <section class="editor-section">
           <div class="section-header">
             <span class="section-num">05</span>
