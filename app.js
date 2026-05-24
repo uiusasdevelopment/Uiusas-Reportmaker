@@ -1,4 +1,4 @@
-﻿// UIUSAS Report Maker â€” app.js
+// UIUSAS Report Maker â€” app.js
 
 let currentTheme = 'teal';
 let methodStepCount = 0;
@@ -1077,10 +1077,7 @@ function loadData(d) {
 }
 
 // â”€â”€ PREVIEW TOGGLE (mobile) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-document.getElementById('btn-preview').addEventListener('click', () => {
-  document.getElementById('editor-panel').style.display =
-    document.getElementById('editor-panel').style.display === 'none' ? '' : 'none';
-});
+
 
 // â”€â”€ TOAST â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function showToast(msg, type = 'success') {
